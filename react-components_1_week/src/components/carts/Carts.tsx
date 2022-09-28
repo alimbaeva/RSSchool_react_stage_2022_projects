@@ -8,7 +8,7 @@ interface CartsProps {
 
 export function Carts(carts: CartsProps): ReactElement {
   return (
-    <div className="cart-item">
+    <div key={carts.carts.id} className="cart-item">
       <div className="cart-item__image">
         <img src={carts.carts.image} alt={carts.carts.category} />
       </div>

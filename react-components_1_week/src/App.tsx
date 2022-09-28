@@ -1,11 +1,10 @@
 import React from 'react';
-import { Carts } from 'components/carts/Carts';
-import { carts } from 'data/dataCart';
+import { RenderCarts } from 'components/carts/RenderCarts';
 
 function App() {
   return (
     <div className="App">
-      <Carts carts={carts[0]} />
+      <RenderCarts />
     </div>
   );
 }
