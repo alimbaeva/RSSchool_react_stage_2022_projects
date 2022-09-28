@@ -1,0 +1,86 @@
+.cart-item {
+    width: 350px;
+    border: 1px solid black;
+    position: relative;    
+}
+
+.cart-item__image {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.cart-item__image img{
+    width: 200px;
+}
+
+.medal {
+    width: 80px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.checked {
+    width: 50px;
+    position: absolute;
+    top: 80%;
+    right: 18px;
+}
+
+.cart-item__text {
+    width: 94%;
+    margin: 0 auto;
+}
+
+.cart-item__text p {
+    font-size: 1.7rem;
+    background-color: blanchedalmond;
+}
+.cart-item__rating {
+    padding:0 5px 5px 10px;
+    -webkit-box-shadow: -1px 14px 8px 9px rgba(216, 201, 128, 0.2);
+    -moz-box-shadow: -1px 14px 8px 9px rgba(216, 201, 128, 0.2);
+    box-shadow: -1px 14px 8px 9px rgba(216, 201, 128, 0.2);
+}
+
+.cart-item__rating p{
+    background-color: inherit;
+    font-size: 1rem;
+}
+
+.cart-item__pay {
+    margin: 25px 0 5px;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.cart-item__pay img {
+    width: 20px;
+    margin-left: 13px;
+    cursor: pointer;
+}
+
+.white-hart {
+    display: none;
+}
+
+.count-block {
+    display: inline-block;
+}
+
+.count {
+    font-size: 1.5rem;
+}
+
+.count-block button {
+    background-color: inherit;
+    border: none;
+    cursor: pointer;
+
+}
+
+.count-block button img {
+    width: 15px;
+}
