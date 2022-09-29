@@ -1,5 +1,12 @@
+.carts-block {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
 .cart-item {
     width: 350px;
+    margin-bottom: 25px;
     border: 1px solid black;
     position: relative;    
 }
@@ -24,8 +31,8 @@
 .checked {
     width: 50px;
     position: absolute;
-    top: 80%;
-    right: 18px;
+    top: 0;
+    left: 4px;
 }
 
 .cart-item__text {

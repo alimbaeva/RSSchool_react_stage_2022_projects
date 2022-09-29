@@ -5,9 +5,11 @@ import { carts } from 'data/dataCart';
 export function RenderCarts(): ReactElement {
   return (
     <div className="container">
-      {carts.map((cart, id) => {
-        return <Carts key={id} carts={cart} />;
-      })}
+      <div className="carts-block">
+        {carts.map((cart, id) => {
+          return <Carts key={id} carts={cart} />;
+        })}
+      </div>
     </div>
   );
 }
