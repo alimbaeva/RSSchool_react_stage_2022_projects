@@ -1,9 +1,11 @@
 import React from 'react';
 import { RenderCarts } from 'components/carts/RenderCarts';
+import { Search } from 'components/search/Search';
 
 function App() {
   return (
     <div className="App">
+      <Search />
       <RenderCarts />
     </div>
   );
