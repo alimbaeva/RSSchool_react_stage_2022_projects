@@ -1,33 +1,49 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import React from 'react';
 import './search.css';
 
-export default class Search extends React.Component {
-  valueInput: string;
-  valueInputLS: string | null;
-  // eslint-disable-next-line @typescript-eslint/ban-types
+// interface Component<P = {}, S = {}> extends ComponentLifecycle<P, S> { }
+
+export default class Search extends React.Component<{}, { value: string }> {
   constructor(props: {} | Readonly<{}>) {
     super(props);
-    this.valueInput = '';
-    this.valueInputLS = localStorage.getItem('valueInput');
+    this.state = { value: '' };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount() {}
+  handleChange(event: { target: { value: string } }) {
+    this.setState({ value: event.target.value });
+  }
 
-  componentWillUnmount() {}
+  handleSubmit(event: { preventDefault: () => void }) {
+    alert('Отправленное имя: ' + this.state.value);
+    event.preventDefault();
+  }
+
+  componentDidMount() {
+    let valueI: string | null = '';
+    if (localStorage.getItem('valueInput')) {
+      valueI = localStorage.getItem('valueInput');
+    }
+    if (valueI) {
+      this.setState({ value: valueI });
+    }
+  }
+
+  componentWillUnmount() {
+    localStorage.setItem('inputValue', this.state.value);
+  }
 
   render() {
     return (
       <div className="container">
-        <div className="search">
-          <input
-            type="text"
-            value={this.valueInputLS ? this.valueInputLS : 'null'}
-            onChange={(e) => (this.valueInput = e.target.value)}
-          />
-          <div
-            className="img-search"
-            onClick={() => localStorage.setItem('valueInput', this.valueInput)}
-          >
+        <form onSubmit={this.handleSubmit} className="search">
+          <label>
+            <input type="text" value={this.state.value} onChange={this.handleChange} />
+          </label>
+          <div className="img-search">
             <img
               className="img-search__search"
               src="https://i.ibb.co/Vvy864S/search.png"
@@ -40,12 +56,13 @@ export default class Search extends React.Component {
             />
           </div>
           <button
+            type="submit"
             className="search-btn"
-            onClick={() => localStorage.setItem('valueInput', this.valueInput)}
+            onClick={() => localStorage.setItem('valueInput', this.state.value)}
           >
             search
           </button>
-        </div>
+        </form>
       </div>
     );
   }
