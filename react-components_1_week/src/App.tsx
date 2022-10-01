@@ -1,13 +1,22 @@
 import React from 'react';
-import { RenderCarts } from 'components/carts/RenderCarts';
-import Search from 'components/search/Search';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Main from 'components/pages/Main';
+import Header from 'components/header/Header';
+import NoteFound from 'components/pages/NoteFound';
 import './app.css';
 
 function App() {
   return (
-    <div className="App">
-      <Search />
-      <RenderCarts />
+    <div className="app">
+      <BrowserRouter>
+        <header>
+          <Header />
+        </header>
+        <Routes>
+          <Route index element={<Main />} />
+          <Route path="*" element={<NoteFound />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
