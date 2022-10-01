@@ -41,7 +41,12 @@ export default class Search extends React.Component<{}, { value: string }> {
       <div className="container">
         <form onSubmit={this.handleSubmit} className="search">
           <label>
-            <input type="text" value={this.state.value} onChange={this.handleChange} />
+            <input
+              placeholder="serch"
+              type="text"
+              value={this.state.value}
+              onChange={this.handleChange}
+            />
           </label>
           <div className="img-search">
             <img
