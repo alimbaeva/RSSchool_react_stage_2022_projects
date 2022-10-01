@@ -19,13 +19,15 @@ export default class Header extends React.Component {
   render() {
     return (
       <div className="container">
-        {menuItems.map((menu) => {
-          return (
-            <NavLink key={menu.id} to={menu.link}>
-              {menu.menu}
-            </NavLink>
-          );
-        })}
+        <div className="menu">
+          {menuItems.map((menu) => {
+            return (
+              <NavLink className="link" key={menu.id} to={menu.link}>
+                {menu.menu}
+              </NavLink>
+            );
+          })}
+        </div>
       </div>
     );
   }

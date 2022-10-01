@@ -18,7 +18,6 @@ export default class Search extends React.Component<{}, { value: string }> {
   }
 
   handleSubmit(event: { preventDefault: () => void }) {
-    alert('Отправленное имя: ' + this.state.value);
     event.preventDefault();
   }
 
