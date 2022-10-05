@@ -5,7 +5,7 @@ export default class About extends React.Component {
   render(): React.ReactNode {
     return (
       <div className="container">
-        <div className="about">
+        <div data-testid="about-page" className="about">
           <h1>О нас</h1>
           <p>
             Добавить React-Router версии 6. Добавьте заголовок, который показывает текущую страницу.
