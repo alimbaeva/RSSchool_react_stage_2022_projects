@@ -12,11 +12,15 @@ describe('Test Router App', () => {
     );
     const mainLink = screen.getByText(/home/i);
     const aboutLink = screen.getByText(/about/i);
+    const formsLink = screen.getByText(/forms/i);
     userEvent.click(aboutLink);
     expect(screen.getByTestId('about-page')).toBeInTheDocument();
 
     userEvent.click(mainLink);
     expect(screen.getByTestId('main-page')).toBeInTheDocument();
+
+    userEvent.click(formsLink);
+    expect(screen.getByTestId('forms-page')).toBeInTheDocument();
   });
   test('Router test Error', () => {
     render(
