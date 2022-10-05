@@ -1,16 +1,48 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import './style/forms.css';
 
+type State = {
+  name?: string;
+};
+
+interface FormElements extends HTMLFormControlsCollection {
+  fname: HTMLInputElement;
+}
+interface UsernameFormElement extends HTMLFormElement {
+  readonly: FormElements;
+}
+
+// DetailedHTMLProps<HTMLAttributes<HTMLDivElement>>
 export default class Forms extends React.Component {
+  input: React.RefObject<HTMLInputElement> | null;
+  // input: React.RefObject<HTMLInputElement> | null;
+  state: State;
+  constructor(props: PropsWithChildren) {
+    super(props);
+    this.state = {
+      name: '',
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.input = React.createRef();
+  }
+
+  handleSubmit(e: React.FormEvent<UsernameFormElement>): void {
+    alert('Отправленное имя: ' + this.input?.current?.value);
+    this.setState({
+      [(e.target as HTMLInputElement).name]: (e.target as HTMLInputElement).value,
+    });
+    // event.preventDefault();
+  }
+
   render(): React.ReactNode {
     return (
       <div className="container">
         <div data-testid="forms-page" className="forms">
           <h2>Forms</h2>
-          <form>
+          <form onSubmit={this.handleSubmit}>
             <label htmlFor="fname">
               First name:
-              <input type="text" data-testid="fname" name="fname" />
+              <input type="text" data-testid="fname" name="fname" ref={this.input} />
             </label>
 
             <label htmlFor="lname">
