@@ -13,6 +13,11 @@ const menuItems = [
     menu: 'about',
     link: 'about',
   },
+  {
+    id: 3,
+    menu: 'forms',
+    link: 'forms',
+  },
 ];
 
 export default class Header extends React.Component {
