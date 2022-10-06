@@ -19,7 +19,7 @@ h2 {
     display: flex;
 }
 
-.block-form_item input {
+.block-form_item button {
     margin-right: 22px;
 }
 .block-form_item .btn-form {

@@ -40,6 +40,7 @@ export default class FormsData extends React.Component {
     carts.push(cart);
     localStorage.setItem('carts', JSON.stringify(carts));
     this.consolvieu();
+    Array.from(document.querySelectorAll('input')).forEach((input) => (input.value = ''));
   }
 
   consolvieu() {
@@ -113,8 +114,12 @@ export default class FormsData extends React.Component {
             </div>
 
             <div className="block-form_item">
-              <input className="btn-form" type="submit" value="Submit" />
-              <input className="btn-form" type="reset" />
+              <button className="btn-form" type="submit" value="Submit">
+                submit
+              </button>
+              <button className="btn-form" type="reset">
+                reset
+              </button>
             </div>
           </form>
         </div>
