@@ -46,3 +46,7 @@ export interface FormElements extends HTMLFormControlsCollection {
 export interface UsernameFormElement extends HTMLFormElement {
   readonly: FormElements;
 }
+
+export interface FormCart {
+  card: Cart;
+}
