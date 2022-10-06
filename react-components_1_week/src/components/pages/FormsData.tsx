@@ -2,7 +2,11 @@ import React, { PropsWithChildren } from 'react';
 import { Cart, UsernameFormElement } from '../../Types';
 import './style/forms.css';
 
-export const carts: Cart[] = [];
+export const carts: Cart[] = localStorage.getItem('carts')
+  ? JSON.parse(localStorage.getItem('carts')!)
+  : [];
+
+console.log(carts);
 export default class FormsData extends React.Component {
   inputFname: React.RefObject<HTMLInputElement> | null;
   inputLname: React.RefObject<HTMLInputElement> | null;
@@ -34,6 +38,7 @@ export default class FormsData extends React.Component {
       sex: this.sexM ? this.sexM : this.sexF,
     };
     carts.push(cart);
+    localStorage.setItem('carts', JSON.stringify(carts));
     this.consolvieu();
   }
 
