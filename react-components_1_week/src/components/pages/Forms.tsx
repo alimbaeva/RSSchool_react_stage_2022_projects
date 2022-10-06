@@ -1,9 +1,9 @@
 import React, { PropsWithChildren } from 'react';
 import './style/forms.css';
 
-type State = {
-  name?: string;
-};
+interface Cart {
+  name: string | undefined;
+}
 
 interface FormElements extends HTMLFormControlsCollection {
   fname: HTMLInputElement;
@@ -12,26 +12,43 @@ interface UsernameFormElement extends HTMLFormElement {
   readonly: FormElements;
 }
 
-// DetailedHTMLProps<HTMLAttributes<HTMLDivElement>>
+const carts: Cart[] = [];
 export default class Forms extends React.Component {
-  input: React.RefObject<HTMLInputElement> | null;
-  // input: React.RefObject<HTMLInputElement> | null;
-  state: State;
+  inputFname: React.RefObject<HTMLInputElement> | null;
+  inputLname: React.RefObject<HTMLInputElement> | null;
+  inputDate: React.RefObject<HTMLInputElement> | null;
+  inputEmail: React.RefObject<HTMLInputElement> | null;
+  inputFile: React.RefObject<HTMLInputElement> | null;
+  sexF: string;
+  sexM: string;
   constructor(props: PropsWithChildren) {
     super(props);
-    this.state = {
-      name: '',
-    };
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.input = React.createRef();
+    this.inputFname = React.createRef();
+    this.inputLname = React.createRef();
+    this.inputDate = React.createRef();
+    this.inputEmail = React.createRef();
+    this.inputFile = React.createRef();
+    this.sexF = '';
+    this.sexM = '';
   }
 
   handleSubmit(e: React.FormEvent<UsernameFormElement>): void {
-    alert('Отправленное имя: ' + this.input?.current?.value);
-    this.setState({
-      [(e.target as HTMLInputElement).name]: (e.target as HTMLInputElement).value,
-    });
-    // event.preventDefault();
+    e.preventDefault();
+    const cart = {
+      name: this.inputFname?.current?.value,
+      lastname: this.inputLname?.current?.value,
+      date: this.inputDate?.current?.value,
+      file: this.inputFile?.current?.value,
+      email: this.inputEmail?.current?.value,
+      sex: this.sexM ? this.sexM : this.sexF,
+    };
+    carts.push(cart);
+    this.consolvieu();
+  }
+
+  consolvieu() {
+    console.log(carts);
   }
 
   render(): React.ReactNode {
@@ -42,38 +59,62 @@ export default class Forms extends React.Component {
           <form onSubmit={this.handleSubmit}>
             <label htmlFor="fname">
               First name:
-              <input type="text" data-testid="fname" name="fname" ref={this.input} />
+              <input type="text" data-testid="fname" name="fname" ref={this.inputFname} required />
             </label>
 
             <label htmlFor="lname">
               Last name:
-              <input type="text" data-testid="lname" name="lname" />
+              <input type="text" data-testid="lname" name="lname" ref={this.inputLname} required />
             </label>
 
             <label htmlFor="date-delivery">
               Date delivery:
-              <input type="date" data-testid="date-delivery" name="date-delivery" />
+              <input
+                type="date"
+                data-testid="date-delivery"
+                name="date-delivery"
+                ref={this.inputDate}
+                required
+              />
             </label>
 
             <label htmlFor="myfile">
               Select a file:
-              <input type="file" data-testid="myfile" name="myfile" />
+              <input type="file" data-testid="myfile" name="myfile" ref={this.inputFile} required />
             </label>
 
             <label htmlFor="email">
               Enter your email:
-              <input type="email" data-testid="email" name="email" />
+              <input type="email" data-testid="email" name="email" ref={this.inputEmail} required />
             </label>
 
             <div className="block-form_item">
               <label htmlFor="male">
                 male
-                <input type="radio" data-testid="male" name="sex" value="male"></input>
+                <input
+                  type="radio"
+                  data-testid="male"
+                  name="sex"
+                  value="male"
+                  onClick={(e) => {
+                    this.sexM = e.currentTarget.value;
+                    this.sexF = '';
+                  }}
+                ></input>
               </label>
 
               <label htmlFor="female">
                 female
-                <input type="radio" data-testid="female" name="sex" value="female"></input>
+                <input
+                  type="radio"
+                  data-testid="female"
+                  name="sex"
+                  value="female"
+                  onClick={(e) => {
+                    this.sexF = e.currentTarget.value;
+                    this.sexM = '';
+                  }}
+                ></input>
               </label>
             </div>
 
