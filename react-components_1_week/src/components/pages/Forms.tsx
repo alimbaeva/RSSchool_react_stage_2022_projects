@@ -1,16 +1,6 @@
 import React, { PropsWithChildren } from 'react';
+import { Cart, UsernameFormElement } from '../../Types';
 import './style/forms.css';
-
-interface Cart {
-  name: string | undefined;
-}
-
-interface FormElements extends HTMLFormControlsCollection {
-  fname: HTMLInputElement;
-}
-interface UsernameFormElement extends HTMLFormElement {
-  readonly: FormElements;
-}
 
 const carts: Cart[] = [];
 export default class Forms extends React.Component {
