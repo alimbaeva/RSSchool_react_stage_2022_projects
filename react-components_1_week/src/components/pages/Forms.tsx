@@ -1,6 +1,7 @@
 import FormCarts from 'components/formCarts/FormCarts';
 import React from 'react';
 import FormsData from './FormsData';
+import './style/forms.css';
 
 export default class Forms extends React.Component {
   render(): React.ReactNode {

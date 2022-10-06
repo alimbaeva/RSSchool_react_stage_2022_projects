@@ -2,7 +2,7 @@
     display: flex;
     flex-wrap: wrap;
 }
-.forms h2 {
+h2 {
     width: 100%;
     text-align: center;
 }
@@ -30,4 +30,10 @@
 
 .block-form_item .btn-form:hover {
     background-color: rgb(157, 228, 157);
+}
+
+.form-cart-block {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
