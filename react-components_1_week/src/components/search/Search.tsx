@@ -1,13 +1,16 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import React from 'react';
 import './search.css';
+import { Character } from '../../rickiMartyTypes';
 
 // interface Component<P = {}, S = {}> extends ComponentLifecycle<P, S> { }
 
 export default class Search extends React.Component<{}, { value: string }> {
-  constructor(props: {} | Readonly<{}>) {
+  constructor(props: {} | Readonly<{ Data: Character[] }>) {
     super(props);
-    this.state = { value: '' };
+    this.state = {
+      value: '',
+    };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);

@@ -51,10 +51,17 @@ export default class FormsData extends React.Component {
     return (
       <div>
         <div data-testid="forms-page" className="forms">
-          <form onSubmit={this.handleSubmit}>
+          <form data-testid="forms-names" onSubmit={this.handleSubmit}>
             <label htmlFor="fname">
               First name:
-              <input type="text" data-testid="fname" name="fname" ref={this.inputFname} required />
+              <input
+                placeholder="name"
+                type="text"
+                data-testid="fname"
+                name="fname"
+                ref={this.inputFname}
+                required
+              />
             </label>
 
             <label htmlFor="lname">
