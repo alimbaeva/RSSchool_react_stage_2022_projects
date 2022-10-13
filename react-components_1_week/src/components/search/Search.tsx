@@ -6,13 +6,13 @@ import RenderCarts from 'components/carts/RenderCarts';
 
 // interface Component<P = {}, S = {}> extends ComponentLifecycle<P, S> { }
 
-export default class Search extends React.Component<{}, { value: string }> {
+export default class Search extends React.Component<{}, { value: string; key: number }> {
   constructor(props: {} | Readonly<{ Data: Character[] }>) {
     super(props);
     this.state = {
       value: '',
+      key: 0,
     };
-
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -23,6 +23,7 @@ export default class Search extends React.Component<{}, { value: string }> {
 
   handleSubmit(event: { preventDefault: () => void }) {
     event.preventDefault();
+    this.setState({ key: Math.random() });
   }
 
   componentDidMount() {
@@ -73,7 +74,7 @@ export default class Search extends React.Component<{}, { value: string }> {
             </button>
           </form>
         </div>
-        <RenderCarts value={this.state.value} key={this.state.value} />
+        <RenderCarts value={this.state.value} key={this.state.key} />
       </>
     );
   }
