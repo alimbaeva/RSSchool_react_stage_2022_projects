@@ -14,7 +14,7 @@ export default class RenderCarts extends React.Component<{ value: string | Chara
     this.state = {
       value: [],
     };
-    this.loading = false;
+    this.loading = true;
   }
 
   async componentDidMount() {
@@ -23,7 +23,7 @@ export default class RenderCarts extends React.Component<{ value: string | Chara
       const response = await fetch(`https://rickandmortyapi.com/api/character/?name=${nameSearch}`);
       const data = await response.json();
       setTimeout(() => {
-        this.loading = true;
+        this.loading = false;
         this.setState({ value: data.results });
       }, 1500);
     } catch (err) {
@@ -32,10 +32,10 @@ export default class RenderCarts extends React.Component<{ value: string | Chara
   }
 
   render(): React.ReactNode {
-    // console.log(this.props.value);
     return (
       <div className="container">
         <div data-testid="main-page" className="carts-block">
+          {this.loading && <h2>Loading...</h2>}
           {this.state.value.map((cart: Character, id: number) => {
             return <Carts carts={cart} key={id} />;
           })}
