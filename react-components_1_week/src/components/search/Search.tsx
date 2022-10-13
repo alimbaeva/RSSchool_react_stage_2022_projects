@@ -2,6 +2,7 @@
 import React from 'react';
 import './search.css';
 import { Character } from '../../rickiMartyTypes';
+import RenderCarts from 'components/carts/RenderCarts';
 
 // interface Component<P = {}, S = {}> extends ComponentLifecycle<P, S> { }
 
@@ -40,37 +41,40 @@ export default class Search extends React.Component<{}, { value: string }> {
 
   render() {
     return (
-      <div className="container">
-        <form onSubmit={this.handleSubmit} className="search">
-          <label>
-            <input
-              placeholder="serch"
-              type="text"
-              value={this.state.value}
-              onChange={this.handleChange}
-            />
-          </label>
-          <div className="img-search">
-            <img
-              className="img-search__search"
-              src="https://i.ibb.co/Vvy864S/search.png"
-              alt="search"
-            />
-            <img
-              className="img-search__close"
-              src="https://i.ibb.co/CMChtYx/close-2.png"
-              alt="close-2"
-            />
-          </div>
-          <button
-            type="submit"
-            className="search-btn"
-            onClick={() => localStorage.setItem('valueInput', this.state.value)}
-          >
-            search
-          </button>
-        </form>
-      </div>
+      <>
+        <div className="container">
+          <form onSubmit={this.handleSubmit} className="search">
+            <label>
+              <input
+                placeholder="serch"
+                type="text"
+                value={this.state.value}
+                onChange={this.handleChange}
+              />
+            </label>
+            <div className="img-search">
+              <img
+                className="img-search__search"
+                src="https://i.ibb.co/Vvy864S/search.png"
+                alt="search"
+              />
+              <img
+                className="img-search__close"
+                src="https://i.ibb.co/CMChtYx/close-2.png"
+                alt="close-2"
+              />
+            </div>
+            <button
+              type="submit"
+              className="search-btn"
+              onClick={() => localStorage.setItem('valueInput', this.state.value)}
+            >
+              search
+            </button>
+          </form>
+        </div>
+        <RenderCarts value={this.state.value} key={this.state.value} />
+      </>
     );
   }
 }

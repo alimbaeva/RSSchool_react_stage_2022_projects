@@ -5,7 +5,7 @@ type State = {
   value: [];
 };
 
-export default class RenderCarts extends React.Component<{ value: [] | Character[] }> {
+export default class RenderCarts extends React.Component<{ value: string | Character[] }> {
   data: Character[] | undefined;
   loading: boolean;
   state: State;
@@ -19,12 +19,12 @@ export default class RenderCarts extends React.Component<{ value: [] | Character
 
   async componentDidMount() {
     try {
-      const response = await fetch(`https://rickandmortyapi.com/api/character/?status=Dead`);
+      const nameSearch = this.props.value ? this.props.value : '';
+      const response = await fetch(`https://rickandmortyapi.com/api/character/?name=${nameSearch}`);
       const data = await response.json();
       setTimeout(() => {
         this.loading = true;
         this.setState({ value: data.results });
-        console.log(data.results);
       }, 1500);
     } catch (err) {
       console.log(err);
@@ -32,11 +32,11 @@ export default class RenderCarts extends React.Component<{ value: [] | Character
   }
 
   render(): React.ReactNode {
+    // console.log(this.props.value);
     return (
       <div className="container">
         <div data-testid="main-page" className="carts-block">
           {this.state.value.map((cart: Character, id: number) => {
-            console.log('==');
             return <Carts carts={cart} key={id} />;
           })}
         </div>
