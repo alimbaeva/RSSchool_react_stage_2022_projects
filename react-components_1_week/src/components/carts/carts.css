@@ -9,9 +9,17 @@ body {
 
 .cart-item {
     width: 350px;
+    padding: 25px 10px;
     margin-bottom: 25px;
     border: 1px solid black;
-    position: relative;    
+    position: relative; 
+    border-radius: 10px; 
+    cursor: pointer; 
+    box-shadow: 2px 3px 3px 2px #343332, -2px -3px 3px 2px #343332; 
+}
+.cart-item:hover {
+    border: none;
+    box-shadow: 2px 3px 3px 2px #e0cbb5, -2px -3px 3px 2px #e0cbb5; 
 }
 
 .cart-item__image {
