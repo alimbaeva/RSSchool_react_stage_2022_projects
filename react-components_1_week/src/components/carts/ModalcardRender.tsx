@@ -6,14 +6,14 @@ type Props = {
   carts: Character;
 };
 
-export default class RenderCarts extends React.Component<Props> {
+export default class ModalcardRender extends React.Component<Props> {
   constructor(props: Props | Readonly<Props>) {
     super(props);
   }
 
   render(): React.ReactNode {
     return (
-      <div className="card-modal">
+      <div data-testid="model-card" className="card-modal">
         <h2>${this.props.carts.name}</h2>
         <div className="card-modal_text">
           <h5>Created: {this.props.carts.created}</h5>

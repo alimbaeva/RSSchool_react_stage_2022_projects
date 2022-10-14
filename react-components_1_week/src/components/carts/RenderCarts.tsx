@@ -37,6 +37,7 @@ export default class RenderCarts extends React.Component<{ value: string | Chara
         const idCard = this.state.clickCard;
         const response = await fetch(`https://rickandmortyapi.com/api/character/${idCard}`);
         const cardData = await response.json();
+        console.log(cardData);
         this.setState({ cardData: cardData });
       } catch (err) {
         console.log(err);
@@ -67,8 +68,7 @@ export default class RenderCarts extends React.Component<{ value: string | Chara
     return (
       <div className="container">
         {this.clickCartModal && (
-          <div className="modalCard" onClick={this.closeModal}>
-            clicked
+          <div data-testid="model-page" className="modalCard" onClick={this.closeModal}>
             {this.state.cardData && <ModalcardRender carts={this.state.cardData} key={'1'} />}
           </div>
         )}
