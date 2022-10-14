@@ -13,7 +13,7 @@ export default class Carts extends React.Component<Props> {
   }
   render(): React.ReactNode {
     return (
-      <div key={this.props.carts.id} className="cart-item">
+      <div id={String(this.props.carts.id)} className="cart-item">
         <div className="cart-item__image">
           <img src={this.props.carts.image} alt={this.props.carts.name} />
         </div>

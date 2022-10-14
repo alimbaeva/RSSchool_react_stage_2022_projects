@@ -1,3 +1,6 @@
+body {
+    position: relative;
+}
 .carts-block {
     display: flex;
     flex-wrap: wrap;
@@ -90,4 +93,21 @@
 
 .count-block button img {
     width: 15px;
+}
+
+.modalCard {
+    display: block;
+    background-color: rgb(24, 24, 24);
+    width: 100%;
+    height: 100%;
+    position:fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    opacity: .9;
+}
+.modalCardNon {
+    width: 1px;
+    height: 1px;
+    display: none;
 }

@@ -1,0 +1,22 @@
+.card-modal {
+    width: 680px;
+    margin: auto auto;
+    transform: translateX(-50%);
+    transform: translateY(50%);
+    background-color: beige;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    border-radius: 20px;
+    box-shadow: 5px 5px 9px 5px #d58b3c, -5px -5px 9px 5px #d58b3c;
+}
+
+.card-modal_text {
+    font-size: 1.3rem;
+}
+
+.card-modal_imgs img{
+    margin-left: 25px;
+    border-radius: 25px;
+}
