@@ -1,81 +1,65 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import React from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import './search.css';
-import { Character } from '../../rickiMartyTypes';
+// import { Character } from '../../rickiMartyTypes';
 import RenderCarts from 'components/carts/RenderCarts';
 
-// interface Component<P = {}, S = {}> extends ComponentLifecycle<P, S> { }
+const Search: FC<{}> = () => {
+  const [handleChange, setHandleChange] = useState<string>('');
+  const [key, setKey] = useState<number>(0);
+  const inputEl = useRef<HTMLInputElement | null>(null);
+  inputEl.current?.focus();
 
-export default class Search extends React.Component<{}, { value: string; key: number }> {
-  constructor(props: {} | Readonly<{ Data: Character[] }>) {
-    super(props);
-    this.state = {
-      value: '',
-      key: 0,
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+  function handleSubmit(e: { preventDefault: () => void }) {
+    e.preventDefault();
+    setHandleChange(`${inputEl.current?.value}`);
+    localStorage.setItem('valueInput', `${inputEl.current?.value}`);
+    console.log('inputEl.current', inputEl.current?.value);
+    console.log('handleChange', handleChange);
+    console.log('localStorage', localStorage.getItem('valueInput'));
   }
 
-  handleChange(event: { target: { value: string } }) {
-    this.setState({ value: event.target.value });
-  }
+  useEffect(() => {
+    setKey(Math.random());
+  }, [handleChange]);
 
-  handleSubmit(event: { preventDefault: () => void }) {
-    event.preventDefault();
-    this.setState({ key: Math.random() });
-  }
+  return (
+    <>
+      <div className="container">
+        <form onSubmit={handleSubmit} className="search">
+          <label>
+            <input
+              placeholder={
+                localStorage.getItem('valueInput')
+                  ? `${localStorage.getItem('valueInput')}`
+                  : 'search'
+              }
+              type="text"
+              ref={inputEl}
+              // value={handleChange}
+              // onChange={(e) => setHandleChange(e.target.value)}
+            />
+          </label>
+          <div className="img-search">
+            <img
+              className="img-search__search"
+              src="https://i.ibb.co/Vvy864S/search.png"
+              alt="search"
+            />
+            <img
+              className="img-search__close"
+              src="https://i.ibb.co/CMChtYx/close-2.png"
+              alt="close-2"
+            />
+          </div>
+          <button type="submit" className="search-btn">
+            search
+          </button>
+        </form>
+      </div>
+      <RenderCarts value={handleChange} key={key} />
+    </>
+  );
+};
 
-  componentDidMount() {
-    let valueI: string | null = '';
-    if (localStorage.getItem('valueInput')) {
-      valueI = localStorage.getItem('valueInput');
-    }
-    if (valueI) {
-      this.setState({ value: valueI });
-    }
-  }
-
-  componentWillUnmount() {
-    localStorage.setItem('inputValue', this.state.value);
-  }
-
-  render() {
-    return (
-      <>
-        <div className="container">
-          <form onSubmit={this.handleSubmit} className="search">
-            <label>
-              <input
-                placeholder="serch"
-                type="text"
-                value={this.state.value}
-                onChange={this.handleChange}
-              />
-            </label>
-            <div className="img-search">
-              <img
-                className="img-search__search"
-                src="https://i.ibb.co/Vvy864S/search.png"
-                alt="search"
-              />
-              <img
-                className="img-search__close"
-                src="https://i.ibb.co/CMChtYx/close-2.png"
-                alt="close-2"
-              />
-            </div>
-            <button
-              type="submit"
-              className="search-btn"
-              onClick={() => localStorage.setItem('valueInput', this.state.value)}
-            >
-              search
-            </button>
-          </form>
-        </div>
-        <RenderCarts value={this.state.value} key={this.state.key} />
-      </>
-    );
-  }
-}
+export default Search;

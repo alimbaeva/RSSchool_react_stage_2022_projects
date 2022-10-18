@@ -7,7 +7,6 @@ export default class Main extends React.Component {
     return (
       <>
         <Search />
-        {/* <RenderCarts value={[]} /> */}
       </>
     );
   }
