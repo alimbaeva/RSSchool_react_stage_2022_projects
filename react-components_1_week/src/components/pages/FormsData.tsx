@@ -1,108 +1,115 @@
-import React, { PropsWithChildren } from 'react';
-import { Cart, UsernameFormElement } from '../../Types';
+import FormCarts from 'components/formCarts/FormCarts';
+import React, { FC, useEffect, useState } from 'react';
+// import React, { FC, PropsWithChildren } from 'react';
+// import { Cart } from '../../Types';
+// import { Cart, UsernameFormElement } from '../../Types';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import './style/forms.css';
+interface IFormInput {
+  firstName: string;
+  lname: string;
+  dateDelivery: string;
+  myfile: string;
+  email: string;
+  sex: string;
+  errors: string;
+}
 
-export const carts: Cart[] = localStorage.getItem('carts')
+export const carts: IFormInput[] = localStorage.getItem('carts')
   ? JSON.parse(localStorage.getItem('carts')!)
   : [];
 
-console.log(carts);
-export default class FormsData extends React.Component {
-  inputFname: React.RefObject<HTMLInputElement> | null;
-  inputLname: React.RefObject<HTMLInputElement> | null;
-  inputDate: React.RefObject<HTMLInputElement> | null;
-  inputEmail: React.RefObject<HTMLInputElement> | null;
-  inputFile: React.RefObject<HTMLInputElement> | null;
-  sexF: string;
-  sexM: string;
-  constructor(props: PropsWithChildren) {
-    super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.inputFname = React.createRef();
-    this.inputLname = React.createRef();
-    this.inputDate = React.createRef();
-    this.inputEmail = React.createRef();
-    this.inputFile = React.createRef();
-    this.sexF = '';
-    this.sexM = '';
-  }
+const FormsData: FC = () => {
+  const [key, setKey] = useState<number>(1);
 
-  handleSubmit(e: React.FormEvent<UsernameFormElement>): void {
-    e.preventDefault();
-    const cart = {
-      name: this.inputFname?.current?.value,
-      lastname: this.inputLname?.current?.value,
-      date: this.inputDate?.current?.value,
-      file: this.inputFile?.current?.value,
-      email: this.inputEmail?.current?.value,
-      sex: this.sexM ? this.sexM : this.sexF,
-    };
-    carts.push(cart);
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<IFormInput>();
+
+  const onSubmit: SubmitHandler<IFormInput> = (data: IFormInput) => {
+    console.log(data);
+    carts.push(data);
     localStorage.setItem('carts', JSON.stringify(carts));
-    this.consolvieu();
     Array.from(document.querySelectorAll('input')).forEach((input) => (input.value = ''));
-  }
-
-  consolvieu() {
     console.log(carts);
-  }
+  };
 
-  render(): React.ReactNode {
-    return (
+  useEffect(() => {
+    setKey(Math.random());
+  }, [register]);
+
+  return (
+    <>
       <div>
         <div data-testid="forms-page" className="forms">
-          <form data-testid="forms-names" onSubmit={this.handleSubmit}>
+          <form data-testid="forms-names" onSubmit={handleSubmit(onSubmit)}>
             <label htmlFor="fname">
               First name:
               <input
                 placeholder="name"
                 type="text"
                 data-testid="fname"
-                name="fname"
-                ref={this.inputFname}
-                required
+                {...register('firstName', { required: true })}
               />
+              <div className="error-form">
+                {errors.firstName?.type === 'required' && 'First name is required'}
+              </div>
             </label>
 
             <label htmlFor="lname">
               Last name:
-              <input type="text" data-testid="lname" name="lname" ref={this.inputLname} required />
+              <input
+                placeholder="last name"
+                type="text"
+                data-testid="lname"
+                {...register('lname', { required: true })}
+              />
+              <div className="error-form">
+                {errors.lname?.type === 'required' && 'last name name is required'}
+              </div>
             </label>
 
-            <label htmlFor="date-delivery">
+            <label htmlFor="dateDelivery">
               Date delivery:
               <input
                 type="date"
                 data-testid="date-delivery"
-                name="date-delivery"
-                ref={this.inputDate}
-                required
+                {...register('dateDelivery', { required: true })}
               />
+              <div className="error-form">
+                {errors.dateDelivery?.type === 'required' && 'Date is required'}
+              </div>
             </label>
 
             <label htmlFor="myfile">
               Select a file:
-              <input type="file" data-testid="myfile" name="myfile" ref={this.inputFile} required />
+              <input type="file" data-testid="myfile" {...register('myfile', { required: true })} />
+              <div className="error-form">
+                {errors.myfile?.type === 'required' && 'file is required'}
+              </div>
             </label>
 
             <label htmlFor="email">
               Enter your email:
-              <input type="email" data-testid="email" name="email" ref={this.inputEmail} required />
+              <input
+                type="email"
+                data-testid="email"
+                {...register('email', { required: true, pattern: /^\S+@\S+\.\S+$/ })}
+              />
+              <div className="error-form">
+                {errors.email?.type === 'required' && 'email is required'}
+              </div>
+              <div className="error-form">
+                {errors.email?.type === 'pattern' && 'email address entered incorrectly'}
+              </div>
             </label>
 
             <div className="block-form_item">
               <label htmlFor="male">
                 male
-                <input
-                  type="radio"
-                  data-testid="male"
-                  name="sex"
-                  value="male"
-                  onClick={(e) => {
-                    this.sexM = e.currentTarget.value;
-                    this.sexF = '';
-                  }}
-                ></input>
+                <input type="radio" data-testid="male" {...register('sex')} value="male"></input>
               </label>
 
               <label htmlFor="female">
@@ -110,12 +117,8 @@ export default class FormsData extends React.Component {
                 <input
                   type="radio"
                   data-testid="female"
-                  name="sex"
+                  {...register('sex')}
                   value="female"
-                  onClick={(e) => {
-                    this.sexF = e.currentTarget.value;
-                    this.sexM = '';
-                  }}
                 ></input>
               </label>
             </div>
@@ -131,6 +134,9 @@ export default class FormsData extends React.Component {
           </form>
         </div>
       </div>
-    );
-  }
-}
+      <FormCarts key={key} />
+    </>
+  );
+};
+
+export default FormsData;

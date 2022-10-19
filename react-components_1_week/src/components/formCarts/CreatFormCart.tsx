@@ -1,16 +1,32 @@
-import React from 'react';
-import { FormCart } from 'Types';
+import React, { FC } from 'react';
+// import { FormCart } from 'Types';
 
-export default function CreatFormCart(card: FormCart) {
+interface IFormInput {
+  firstName: string;
+  lname: string;
+  dateDelivery: string;
+  myfile: string;
+  email: string;
+  sex: string;
+  errors: string;
+}
+
+interface formCard {
+  card: IFormInput;
+}
+
+const CreatFormCart: FC<formCard> = (card: formCard) => {
   return (
     <div className="item" data-tesyid="form-vart-id">
       <h3>
-        {card.card.name} {card.card.lastname}
+        {card.card.firstName} {card.card.lname}
       </h3>
-      <p>Date: {card.card.date}</p>
+      <p>Date: {card.card.dateDelivery}</p>
       <p>Email: {card.card.email}</p>
       <p>Sex: {card.card.sex ? card.card.sex : 'unknown gender'}</p>
-      <p>File: {card.card.file}</p>
+      <p>File: {card.card.myfile}</p>
     </div>
   );
-}
+};
+
+export default CreatFormCart;
