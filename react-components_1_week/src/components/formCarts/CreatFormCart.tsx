@@ -1,15 +1,5 @@
 import React, { FC } from 'react';
-// import { FormCart } from 'Types';
-
-interface IFormInput {
-  firstName: string;
-  lname: string;
-  dateDelivery: string;
-  myfile: string;
-  email: string;
-  sex: string;
-  errors: string;
-}
+import { IFormInput } from '../../Types';
 
 interface formCard {
   card: IFormInput;
@@ -24,7 +14,7 @@ const CreatFormCart: FC<formCard> = (card: formCard) => {
       <p>Date: {card.card.dateDelivery}</p>
       <p>Email: {card.card.email}</p>
       <p>Sex: {card.card.sex ? card.card.sex : 'unknown gender'}</p>
-      <p>File: {card.card.myfile}</p>
+      <p>File: {card.card.myfile?.name}</p>
     </div>
   );
 };

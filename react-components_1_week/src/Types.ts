@@ -50,3 +50,13 @@ export interface UsernameFormElement extends HTMLFormElement {
 export interface FormCart {
   card: Cart;
 }
+
+export interface IFormInput {
+  firstName: string;
+  lname: string;
+  dateDelivery: string;
+  myfile: File | null;
+  email: string;
+  sex: string;
+  errors: string;
+}

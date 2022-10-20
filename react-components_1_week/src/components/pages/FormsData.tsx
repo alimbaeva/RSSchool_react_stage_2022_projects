@@ -1,19 +1,8 @@
 import FormCarts from 'components/formCarts/FormCarts';
 import React, { FC, useEffect, useState } from 'react';
-// import React, { FC, PropsWithChildren } from 'react';
-// import { Cart } from '../../Types';
-// import { Cart, UsernameFormElement } from '../../Types';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { IFormInput } from '../../Types';
 import './style/forms.css';
-interface IFormInput {
-  firstName: string;
-  lname: string;
-  dateDelivery: string;
-  myfile: string;
-  email: string;
-  sex: string;
-  errors: string;
-}
 
 export const carts: IFormInput[] = localStorage.getItem('carts')
   ? JSON.parse(localStorage.getItem('carts')!)
@@ -29,11 +18,18 @@ const FormsData: FC = () => {
   } = useForm<IFormInput>();
 
   const onSubmit: SubmitHandler<IFormInput> = (data: IFormInput) => {
-    console.log(data);
-    carts.push(data);
+    const dataCard = {
+      firstName: data.firstName,
+      lname: data.lname,
+      dateDelivery: data.dateDelivery,
+      myfile: (data.myfile as unknown as FileList).item(0),
+      email: data.email,
+      sex: data.sex,
+      errors: data.errors,
+    };
+    carts.push(dataCard);
     localStorage.setItem('carts', JSON.stringify(carts));
     Array.from(document.querySelectorAll('input')).forEach((input) => (input.value = ''));
-    console.log(carts);
   };
 
   useEffect(() => {
