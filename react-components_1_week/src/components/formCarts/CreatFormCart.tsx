@@ -14,7 +14,7 @@ const CreatFormCart: FC<formCard> = (card: formCard) => {
       <p>Date: {card.card.dateDelivery}</p>
       <p>Email: {card.card.email}</p>
       <p>Sex: {card.card.sex ? card.card.sex : 'unknown gender'}</p>
-      <p>File: {card.card.myfile?.name}</p>
+      <p>File: {card.card.myfile}</p>
     </div>
   );
 };

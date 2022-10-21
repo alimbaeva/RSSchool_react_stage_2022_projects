@@ -55,7 +55,8 @@ export interface IFormInput {
   firstName: string;
   lname: string;
   dateDelivery: string;
-  myfile: File | null;
+  myfile: string;
+  // myfile: File | null;
   email: string;
   sex: string;
   errors: string;

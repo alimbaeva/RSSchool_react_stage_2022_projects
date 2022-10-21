@@ -10,19 +10,32 @@ export const carts: IFormInput[] = localStorage.getItem('carts')
 
 const FormsData: FC = () => {
   const [key, setKey] = useState<number>(1);
+  // const [image, setImage] = useState(null);
 
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm<IFormInput>();
+  // userEvent.upload(uploader, file);
+  // Object.defineProperty(uploader, 'value', {
+  //   value: file.name,
+  // }
+
+  // const onImageChange = (event: { target: { files: (Blob | MediaSource)[] } }) => {
+  //   if (event.target.files && event.target.files[0]) {
+  //     setImage(URL.createObjectURL(event.target.files[0]));
+  //   }
+  // };
 
   const onSubmit: SubmitHandler<IFormInput> = (data: IFormInput) => {
+    const url = (data.myfile as unknown as FileList).item(0)?.name;
+    console.log(url);
     const dataCard = {
       firstName: data.firstName,
       lname: data.lname,
       dateDelivery: data.dateDelivery,
-      myfile: (data.myfile as unknown as FileList).item(0),
+      myfile: JSON.stringify(url).slice(1, -1),
       email: data.email,
       sex: data.sex,
       errors: data.errors,
