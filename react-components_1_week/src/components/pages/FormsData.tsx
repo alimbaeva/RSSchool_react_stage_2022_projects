@@ -136,7 +136,7 @@ const FormsData: FC = () => {
               <button className="btn-form" type="submit" value="Submit">
                 submit
               </button>
-              <button className="btn-form" type="reset">
+              <button className="btn-form" type="reset" data-testid="reset">
                 reset
               </button>
             </div>
