@@ -1,5 +1,5 @@
-import { getByTestId, render, screen, fireEvent } from '@testing-library/react';
-// import userEvent from '@testing-library/user-event';
+import { render, screen, fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import FormsData from '../FormsData';
 import CreatFormCart from '../../formCarts/CreatFormCart';
@@ -90,5 +90,15 @@ describe('with valid inputs', () => {
     expect(inputemail.value).toBe('');
     expect(inputmale.value).toBe('');
     expect(inputfemale.value).toBe('');
+  });
+  it('Input value myfile', () => {
+    render(<FormsData />);
+    const inputmyfile = screen.getByTestId('myfile') as HTMLInputElement;
+    expect(inputmyfile.value).toBe('');
+    expect(screen.getByTestId('myfile')).toBeInTheDocument();
+    const file = new File(['hello'], 'hello.png', { type: 'image/png' });
+    userEvent.upload(inputmyfile, file);
+    expect(inputmyfile.files!.item(0)).toStrictEqual(file);
+    expect(inputmyfile.files).toHaveLength(1);
   });
 });
