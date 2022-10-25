@@ -1,7 +1,9 @@
 import React, { FC, useEffect, useState } from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import Carts from './Carts';
 import ModalcardRender from './ModalcardRender';
 import { Character } from '../../rickiMartyTypes';
+import { CardSort } from 'Types';
 
 interface Value {
   value: string;
@@ -9,9 +11,21 @@ interface Value {
 
 const RenderCarts: FC<Value> = ({ value }: Value) => {
   const [loading, setLoading] = useState<boolean>(true);
-  const [clickCartModal, setClickCartModal] = useState<boolean>(false);
   const [data, setData] = useState([]);
+  const [clickCartModal, setClickCartModal] = useState<boolean>(false);
   const [cardData, setСardData] = useState();
+
+  const { register, handleSubmit } = useForm<CardSort>();
+
+  const onSubmit: SubmitHandler<CardSort> = (data: CardSort) => {
+    const sortCard = {
+      resources: data.resources,
+      gender: data.gender,
+      numbers: data.numbers,
+    };
+    console.log(sortCard);
+    // Array.from(document.querySelectorAll('input')).forEach((input) => (input.value = ''));
+  };
 
   useEffect(() => {
     (async () => {
@@ -62,6 +76,45 @@ const RenderCarts: FC<Value> = ({ value }: Value) => {
           {cardData && <ModalcardRender carts={cardData} key={'1'} />}
         </div>
       )}
+      <div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <label htmlFor="resources">
+            Resources:
+            <select data-testid="resources" {...register('resources')}>
+              <option value="character">character</option>
+              <option value="location">location</option>
+              <option value="episode">episode</option>
+            </select>
+          </label>
+          <label htmlFor="gender">
+            Gender:
+            <select data-testid="gender" {...register('gender')}>
+              <option value="null"></option>
+              <option value="female">female</option>
+              <option value="male">male</option>
+              <option value="genderless">Genderless</option>
+              <option value="unknown">Unknown</option>
+            </select>
+          </label>
+          <label htmlFor="numbers">
+            By card numbers:
+            <input
+              placeholder="numbers: 1, 2, 8"
+              type="text"
+              data-testid="numbers"
+              {...register('numbers')}
+            />
+          </label>
+          <div className="block-form_item">
+            <button className="btn-sort" type="submit" value="Submit" data-testid="submit-sort">
+              submit
+            </button>
+            <button className="btn-sort" type="reset" data-testid="reset-sort">
+              reset
+            </button>
+          </div>
+        </form>
+      </div>
       <div data-testid="main-page" className="carts-block" onClick={clickParent}>
         {loading && <h2>Loading...</h2>}
         {data.map((cart: Character, id: number) => {

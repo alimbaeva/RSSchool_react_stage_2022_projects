@@ -61,3 +61,9 @@ export interface IFormInput {
   sex: string;
   errors: string;
 }
+
+export interface CardSort {
+  resources: string;
+  gender: string;
+  numbers: string;
+}

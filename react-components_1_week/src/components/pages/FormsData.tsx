@@ -17,16 +17,6 @@ const FormsData: FC = () => {
     formState: { errors },
     handleSubmit,
   } = useForm<IFormInput>();
-  // userEvent.upload(uploader, file);
-  // Object.defineProperty(uploader, 'value', {
-  //   value: file.name,
-  // }
-
-  // const onImageChange = (event: { target: { files: (Blob | MediaSource)[] } }) => {
-  //   if (event.target.files && event.target.files[0]) {
-  //     setImage(URL.createObjectURL(event.target.files[0]));
-  //   }
-  // };
 
   const onSubmit: SubmitHandler<IFormInput> = (data: IFormInput) => {
     const url = (data.myfile as unknown as FileList).item(0)?.name;
