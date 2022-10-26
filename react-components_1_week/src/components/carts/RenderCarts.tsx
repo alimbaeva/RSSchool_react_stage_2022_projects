@@ -30,7 +30,6 @@ function init(state: any) {
   return { ...state };
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function reduser(state: State, action: State) {
   switch (action.type) {
     case ActionType.DATA:
@@ -57,11 +56,8 @@ function reduser(state: State, action: State) {
 
 const RenderCarts: FC<Value> = ({ value }: Value) => {
   const [loading, setLoading] = useState<boolean>(true);
-  // const [data, setData] = useState([]);
   const [clickCartModal, setClickCartModal] = useState<boolean>(false);
   const [cardData, setСardData] = useState();
-  // const [cardSort, setСardSort] = useState({ status: '', gender: '' });
-  // const [page, setPage] = useState<number>(1);
   const divPage = useRef<HTMLDivElement | null>(null);
 
   const { register, handleSubmit } = useForm<CardSort>();
@@ -78,42 +74,29 @@ const RenderCarts: FC<Value> = ({ value }: Value) => {
   );
 
   const onSubmit: SubmitHandler<CardSort> = (data: CardSort) => {
-    // setСardSort({
-    //   ...{
-    //     status: data.status,
-    //     gender: data.gender,
-    //   },
-    // });
-    dispatch({ type: 'CARDSORT', cardSort: { status: data.status, gender: data.gender } });
+    dispatch({ type: 'CARDSORT', page: 1, cardSort: { status: data.status, gender: data.gender } });
     Array.from(document.querySelectorAll('input')).forEach((input) => (input.value = ''));
   };
 
   const changePageNext = () => {
     const pagenumber = Number(divPage.current?.innerHTML);
     if (pagenumber >= 42) {
-      // setPage(1);
       dispatch({ type: 'PAGE', page: 1 });
     } else {
-      // setPage(Number(divPage.current?.innerHTML) + 1);
       dispatch({ type: 'PAGE', page: pagenumber + 1 });
     }
-    // console.log(page);
   };
   const changePagePrev = () => {
     const pagenumber = Number(divPage.current?.innerHTML);
     if (pagenumber === 1) {
-      // setPage(42);
       dispatch({ type: 'PAGE', page: 42 });
     } else {
-      // setPage(Number(divPage.current?.innerHTML) - 1);
       dispatch({ type: 'PAGE', page: pagenumber - 1 });
     }
     console.log(data.page);
   };
 
   const resetAll = () => {
-    // setPage(1);
-    // setСardSort({ status: '', gender: '' });
     dispatch({ type: 'RESET', page: 1, cardSort: { status: '', gender: '' } });
   };
 
@@ -123,12 +106,16 @@ const RenderCarts: FC<Value> = ({ value }: Value) => {
         `https://rickandmortyapi.com/api/character/?page=${data.page}&name=${value}&status=${data.cardSort.status}&gender=${data.cardSort.gender}`
       );
       if (!response.ok) {
-        throw new Error(`Unable to load data, status ${response.status}`);
+        console.log('err', response.status);
+        if (response.status === 404) {
+          dispatch({ type: 'PAGE', page: 1 });
+        } else {
+          throw new Error(`Unable to load data, status ${response.status}`);
+        }
       }
       const datas = await response.json();
       const time = setTimeout(() => {
         setLoading(false);
-        // setData(datas.results);
         dispatch({ type: 'DATA', data: datas.results });
       }, 1500);
 
