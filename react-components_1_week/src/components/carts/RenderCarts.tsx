@@ -16,6 +16,7 @@ enum ActionType {
   ALLPAGE = 'ALLPAGE',
   CARDSORT = 'CARDSORT',
   RESET = 'RESET',
+  LOADING = 'LOADING',
 }
 
 interface State {
@@ -24,6 +25,7 @@ interface State {
   allPages?: number | null;
   cardSort?: { status: string; gender: string };
   type?: string;
+  loading?: boolean;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -54,6 +56,11 @@ function reduser(state: State, action: State) {
         ...state,
         cardSort: action.cardSort,
       };
+    case ActionType.LOADING:
+      return {
+        ...state,
+        loading: action.loading,
+      };
     case ActionType.RESET:
       return init(action.data);
     default:
@@ -62,7 +69,6 @@ function reduser(state: State, action: State) {
 }
 
 const RenderCarts: FC<Value> = ({ value }: Value) => {
-  const [loading, setLoading] = useState<boolean>(true);
   const [clickCartModal, setClickCartModal] = useState<boolean>(false);
   const [cardData, setСardData] = useState();
   const divPage = useRef<HTMLDivElement | null>(null);
@@ -77,6 +83,7 @@ const RenderCarts: FC<Value> = ({ value }: Value) => {
       allPages: null,
       cardSort: { status: '', gender: '' },
       type: '',
+      loading: true,
     },
     init
   );
@@ -109,6 +116,7 @@ const RenderCarts: FC<Value> = ({ value }: Value) => {
 
   useEffect(() => {
     (async () => {
+      dispatch({ type: 'LOADING', loading: true });
       const response = await fetch(
         `https://rickandmortyapi.com/api/character/?page=${data.page}&name=${value}&status=${data.cardSort.status}&gender=${data.cardSort.gender}`
       );
@@ -117,9 +125,9 @@ const RenderCarts: FC<Value> = ({ value }: Value) => {
       }
       const datas = await response.json();
       const time = setTimeout(() => {
-        setLoading(false);
         dispatch({ type: 'ALLPAGE', allPages: datas.info.pages });
         dispatch({ type: 'DATA', data: datas.results });
+        dispatch({ type: 'LOADING', loading: false });
       }, 1500);
 
       return function cleanTime() {
@@ -191,7 +199,7 @@ const RenderCarts: FC<Value> = ({ value }: Value) => {
         </form>
       </div>
       <div data-testid="main-page" className="carts-block" onClick={clickParent}>
-        {loading && <h2>Loading...</h2>}
+        {data.loading && <h2>Loading...</h2>}
         {data.data.map((cart: Character, id: number) => {
           return <Carts carts={cart} key={id} />;
         })}
