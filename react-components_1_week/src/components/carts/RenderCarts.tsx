@@ -13,6 +13,7 @@ interface Value {
 enum ActionType {
   DATA = 'DATA',
   PAGE = 'PAGE',
+  ALLPAGE = 'ALLPAGE',
   CARDSORT = 'CARDSORT',
   RESET = 'RESET',
 }
@@ -20,6 +21,7 @@ enum ActionType {
 interface State {
   data?: [];
   page?: number;
+  allPages?: number | null;
   cardSort?: { status: string; gender: string };
   type?: string;
 }
@@ -41,6 +43,11 @@ function reduser(state: State, action: State) {
       return {
         ...state,
         page: action.page,
+      };
+    case ActionType.ALLPAGE:
+      return {
+        ...state,
+        allPages: action.allPages,
       };
     case ActionType.CARDSORT:
       return {
@@ -67,6 +74,7 @@ const RenderCarts: FC<Value> = ({ value }: Value) => {
     {
       data: [],
       page: 1,
+      allPages: null,
       cardSort: { status: '', gender: '' },
       type: '',
     },
@@ -80,7 +88,7 @@ const RenderCarts: FC<Value> = ({ value }: Value) => {
 
   const changePageNext = () => {
     const pagenumber = Number(divPage.current?.innerHTML);
-    if (pagenumber >= 42) {
+    if (pagenumber >= data.allPages) {
       dispatch({ type: 'PAGE', page: 1 });
     } else {
       dispatch({ type: 'PAGE', page: pagenumber + 1 });
@@ -89,11 +97,10 @@ const RenderCarts: FC<Value> = ({ value }: Value) => {
   const changePagePrev = () => {
     const pagenumber = Number(divPage.current?.innerHTML);
     if (pagenumber === 1) {
-      dispatch({ type: 'PAGE', page: 42 });
+      dispatch({ type: 'PAGE', page: data.allPages });
     } else {
       dispatch({ type: 'PAGE', page: pagenumber - 1 });
     }
-    console.log(data.page);
   };
 
   const resetAll = () => {
@@ -106,16 +113,12 @@ const RenderCarts: FC<Value> = ({ value }: Value) => {
         `https://rickandmortyapi.com/api/character/?page=${data.page}&name=${value}&status=${data.cardSort.status}&gender=${data.cardSort.gender}`
       );
       if (!response.ok) {
-        console.log('err', response.status);
-        if (response.status === 404) {
-          dispatch({ type: 'PAGE', page: 1 });
-        } else {
-          throw new Error(`Unable to load data, status ${response.status}`);
-        }
+        throw new Error(`Unable to load data, status ${response.status}`);
       }
       const datas = await response.json();
       const time = setTimeout(() => {
         setLoading(false);
+        dispatch({ type: 'ALLPAGE', allPages: datas.info.pages });
         dispatch({ type: 'DATA', data: datas.results });
       }, 1500);
 
