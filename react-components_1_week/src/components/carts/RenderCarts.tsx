@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, useEffect, useRef, useState, useReducer } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import Carts from './Carts';
 import ModalcardRender from './ModalcardRender';
@@ -10,55 +10,117 @@ interface Value {
   value: string;
 }
 
+enum ActionType {
+  DATA = 'DATA',
+  PAGE = 'PAGE',
+  CARDSORT = 'CARDSORT',
+  RESET = 'RESET',
+}
+
+interface State {
+  data?: [];
+  page?: number;
+  cardSort?: { status: string; gender: string };
+  type?: string;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function init(state: any) {
+  console.log(state);
+  return { ...state };
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function reduser(state: State, action: State) {
+  switch (action.type) {
+    case ActionType.DATA:
+      return {
+        ...state,
+        data: action.data,
+      };
+    case ActionType.PAGE:
+      return {
+        ...state,
+        page: action.page,
+      };
+    case ActionType.CARDSORT:
+      return {
+        ...state,
+        cardSort: action.cardSort,
+      };
+    case ActionType.RESET:
+      return init(action.data);
+    default:
+      return state;
+  }
+}
+
 const RenderCarts: FC<Value> = ({ value }: Value) => {
   const [loading, setLoading] = useState<boolean>(true);
-  const [data, setData] = useState([]);
+  // const [data, setData] = useState([]);
   const [clickCartModal, setClickCartModal] = useState<boolean>(false);
   const [cardData, setСardData] = useState();
-  const [cardSort, setСardSort] = useState({ status: '', gender: '' });
-  const [page, setPage] = useState<number>(1);
+  // const [cardSort, setСardSort] = useState({ status: '', gender: '' });
+  // const [page, setPage] = useState<number>(1);
   const divPage = useRef<HTMLDivElement | null>(null);
 
   const { register, handleSubmit } = useForm<CardSort>();
 
+  const [data, dispatch] = useReducer(
+    reduser,
+    {
+      data: [],
+      page: 1,
+      cardSort: { status: '', gender: '' },
+      type: '',
+    },
+    init
+  );
+
   const onSubmit: SubmitHandler<CardSort> = (data: CardSort) => {
-    setСardSort({
-      ...{
-        status: data.status,
-        gender: data.gender,
-      },
-    });
+    // setСardSort({
+    //   ...{
+    //     status: data.status,
+    //     gender: data.gender,
+    //   },
+    // });
+    dispatch({ type: 'CARDSORT', cardSort: { status: data.status, gender: data.gender } });
     Array.from(document.querySelectorAll('input')).forEach((input) => (input.value = ''));
   };
 
   const changePageNext = () => {
-    console.log(divPage.current?.innerHTML);
-    if (Number(divPage.current?.innerHTML) >= 42) {
-      setPage(1);
+    const pagenumber = Number(divPage.current?.innerHTML);
+    if (pagenumber >= 42) {
+      // setPage(1);
+      dispatch({ type: 'PAGE', page: 1 });
     } else {
-      setPage(Number(divPage.current?.innerHTML) + 1);
+      // setPage(Number(divPage.current?.innerHTML) + 1);
+      dispatch({ type: 'PAGE', page: pagenumber + 1 });
     }
-    console.log(page);
+    // console.log(page);
   };
   const changePagePrev = () => {
-    console.log(divPage.current?.innerHTML);
-    if (Number(divPage.current?.innerHTML) === 1) {
-      setPage(42);
+    const pagenumber = Number(divPage.current?.innerHTML);
+    if (pagenumber === 1) {
+      // setPage(42);
+      dispatch({ type: 'PAGE', page: 42 });
     } else {
-      setPage(Number(divPage.current?.innerHTML) - 1);
+      // setPage(Number(divPage.current?.innerHTML) - 1);
+      dispatch({ type: 'PAGE', page: pagenumber - 1 });
     }
-    console.log(page);
+    console.log(data.page);
   };
 
   const resetAll = () => {
-    setPage(1);
-    setСardSort({ status: '', gender: '' });
+    // setPage(1);
+    // setСardSort({ status: '', gender: '' });
+    dispatch({ type: 'RESET', page: 1, cardSort: { status: '', gender: '' } });
   };
 
   useEffect(() => {
     (async () => {
       const response = await fetch(
-        `https://rickandmortyapi.com/api/character/?page=${page}&name=${value}&status=${cardSort.status}&gender=${cardSort.gender}`
+        `https://rickandmortyapi.com/api/character/?page=${data.page}&name=${value}&status=${data.cardSort.status}&gender=${data.cardSort.gender}`
       );
       if (!response.ok) {
         throw new Error(`Unable to load data, status ${response.status}`);
@@ -66,14 +128,15 @@ const RenderCarts: FC<Value> = ({ value }: Value) => {
       const datas = await response.json();
       const time = setTimeout(() => {
         setLoading(false);
-        setData(datas.results);
+        // setData(datas.results);
+        dispatch({ type: 'DATA', data: datas.results });
       }, 1500);
 
       return function cleanTime() {
         clearTimeout(time);
       };
     })();
-  }, [value, cardSort, page]);
+  }, [value, data.cardSort, data.page]);
 
   async function clickParent(event: React.MouseEvent<HTMLElement>) {
     const eventElem = event.target as HTMLElement;
@@ -139,7 +202,7 @@ const RenderCarts: FC<Value> = ({ value }: Value) => {
       </div>
       <div data-testid="main-page" className="carts-block" onClick={clickParent}>
         {loading && <h2>Loading...</h2>}
-        {data.map((cart: Character, id: number) => {
+        {data.data.map((cart: Character, id: number) => {
           return <Carts carts={cart} key={id} />;
         })}
       </div>
@@ -147,7 +210,7 @@ const RenderCarts: FC<Value> = ({ value }: Value) => {
         <button onClick={changePagePrev}>
           <img src="https://i.ibb.co/tJt3D6p/left-arrow.png" alt="left-arrow" />
         </button>
-        <div ref={divPage}> {page} </div>
+        <div ref={divPage}> {data.page} </div>
         <button onClick={changePageNext}>
           <img src="https://i.ibb.co/HzP7jjt/arrow-right.png" alt="arrow-right" />
         </button>
