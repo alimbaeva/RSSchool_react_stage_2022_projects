@@ -116,7 +116,7 @@ const RenderCarts: FC<Value> = ({ value }: Value) => {
 
   useEffect(() => {
     (async () => {
-      dispatch({ type: 'LOADING', loading: true });
+      // dispatch({ type: 'LOADING', loading: true });
       const response = await fetch(
         `https://rickandmortyapi.com/api/character/?page=${data.page}&name=${value}&status=${data.cardSort.status}&gender=${data.cardSort.gender}`
       );
@@ -212,6 +212,15 @@ const RenderCarts: FC<Value> = ({ value }: Value) => {
         <button onClick={changePageNext}>
           <img src="https://i.ibb.co/HzP7jjt/arrow-right.png" alt="arrow-right" />
         </button>
+      </div>
+      <div className="page-numbers">
+        {[...Array(data.allPages).keys()].map((el, id) => {
+          return (
+            <p id="id" key={id}>
+              {el + 1}
+            </p>
+          );
+        })}
       </div>
     </div>
   );

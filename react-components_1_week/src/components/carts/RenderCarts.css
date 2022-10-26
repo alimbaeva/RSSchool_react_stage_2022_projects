@@ -31,7 +31,8 @@
 }
 
 .pages {
-    margin: 80px;
+    margin-top: 80px;
+    margin-bottom: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -59,4 +60,25 @@
 }
 .pages button img {
     width: 25px;
+}
+
+.page-numbers {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.page-numbers p {
+    width: 30px;
+    height: 30px;
+    margin: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    background-color: rgb(244, 238, 231);
+    cursor: pointer;
+}
+
+.page-numbers p:hover {
+    background-color: rgb(186, 227, 174);;
 }
