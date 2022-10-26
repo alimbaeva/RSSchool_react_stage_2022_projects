@@ -1,0 +1,62 @@
+.sort-card {
+    margin-bottom: 60px;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.sort-card label {
+    margin-bottom: 25px;
+    font-size: 20px;
+}
+.sort-card input, select {
+    margin-left: 13px;
+    padding-left: 5px;
+    width: 250px;
+    height: 28px;
+    cursor: pointer;
+}
+
+.sort-card button {
+    width: 100px;
+    height: 28px;
+    background-color: inherit;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.sort-card button:hover {
+    background-color: rgb(132, 190, 171);
+}
+
+.pages {
+    margin: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pages div {
+    font-size: 1.8rem;
+    margin: auto 1rem;
+}
+
+.pages button {
+    background-color: inherit;
+    padding: 8px;
+    border-radius: 100%;
+    border: none;
+    cursor: pointer;
+}
+.pages button:first-child img {
+    width: 20px;
+    margin: 5px;
+}
+
+.pages button:hover {
+    background-color: rgb(186, 227, 174);
+}
+.pages button img {
+    width: 25px;
+}

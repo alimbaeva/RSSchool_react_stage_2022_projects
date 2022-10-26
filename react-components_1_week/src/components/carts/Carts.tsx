@@ -17,17 +17,12 @@ export default class Carts extends React.Component<Props> {
         <div className="cart-item__image">
           <img src={this.props.carts.image} alt={this.props.carts.name} />
         </div>
-        <img className="medal" src="https://i.ibb.co/NYwBYs7/medal.png" alt="medal" />
-        <img
-          className="checked"
-          src="https://i.ibb.co/HCdCQGK/gui-check-yes-icon-157194.png"
-          alt="gui-check-yes-icon-157194"
-        />
         <div className="cart-item__text">
           <h3>{this.props.carts.name}</h3>
-          <p>{this.props.carts.gender} P</p>
+          <p>{this.props.carts.gender}</p>
           <div className="cart-item__rating">
-            <h5>Created: {this.props.carts.created}</h5>
+            <h5>Number Card: {this.props.carts.id} </h5>
+            <h5>Species: {this.props.carts.species} </h5>
             <h5>Location: {this.props.carts.location.name}</h5>
             <h5>Status: {this.props.carts.status}</h5>
             <h5>Type: {this.props.carts.type}</h5>
