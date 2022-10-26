@@ -30,7 +30,6 @@ interface State {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function init(state: any) {
-  console.log(state);
   return { ...state };
 }
 
@@ -136,6 +135,12 @@ const RenderCarts: FC<Value> = ({ value }: Value) => {
     })();
   }, [value, data.cardSort, data.page]);
 
+  function clickPages(event: React.MouseEvent<HTMLElement>) {
+    const eventElem = event.target as HTMLElement;
+    const num = Number(eventElem.textContent);
+    dispatch({ type: 'PAGE', page: num });
+  }
+
   async function clickParent(event: React.MouseEvent<HTMLElement>) {
     const eventElem = event.target as HTMLElement;
     const cartID_1 = eventElem.parentNode?.parentElement?.parentElement?.getAttribute('id');
@@ -213,7 +218,7 @@ const RenderCarts: FC<Value> = ({ value }: Value) => {
           <img src="https://i.ibb.co/HzP7jjt/arrow-right.png" alt="arrow-right" />
         </button>
       </div>
-      <div className="page-numbers">
+      <div className="page-numbers" onClick={clickPages}>
         {[...Array(data.allPages).keys()].map((el, id) => {
           return (
             <p id="id" key={id}>
