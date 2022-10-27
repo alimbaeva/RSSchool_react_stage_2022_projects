@@ -1,9 +1,9 @@
-import React, { FC, useEffect, useRef, useState, useReducer } from 'react';
+import React, { FC, useEffect, useRef, useState, useReducer, useContext } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import Carts from './Carts';
 import ModalcardRender from './ModalcardRender';
 import { Character } from '../../rickiMartyTypes';
-import { CardSort } from 'Types';
+import { CardSort, StateForm } from 'Types';
 import './RenderCarts.css';
 
 interface Value {
@@ -67,30 +67,23 @@ function reduser(state: State, action: State) {
   }
 }
 
-const RenderCarts: FC<Value> = ({ value }: Value) => {
+const RenderCarts: FC = () => {
   const [clickCartModal, setClickCartModal] = useState<boolean>(false);
   const [cardData, setСardData] = useState();
   const divPage = useRef<HTMLDivElement | null>(null);
-
-  const { register, handleSubmit } = useForm<CardSort>();
 
   const [data, dispatch] = useReducer(
     reduser,
     {
       data: [],
-      page: 1,
+      page: value.page,
       allPages: null,
-      cardSort: { status: '', gender: '' },
+      cardSort: { name: value.name, status: value.status, gender: value.gender },
       type: '',
       loading: true,
     },
     init
   );
-
-  const onSubmit: SubmitHandler<CardSort> = (data: CardSort) => {
-    dispatch({ type: 'CARDSORT', page: 1, cardSort: { status: data.status, gender: data.gender } });
-    Array.from(document.querySelectorAll('input')).forEach((input) => (input.value = ''));
-  };
 
   const changePageNext = () => {
     const pagenumber = Number(divPage.current?.innerHTML);
@@ -109,15 +102,10 @@ const RenderCarts: FC<Value> = ({ value }: Value) => {
     }
   };
 
-  const resetAll = () => {
-    dispatch({ type: 'RESET', page: 1, cardSort: { status: '', gender: '' } });
-  };
-
   useEffect(() => {
     (async () => {
-      // dispatch({ type: 'LOADING', loading: true });
       const response = await fetch(
-        `https://rickandmortyapi.com/api/character/?page=${data.page}&name=${value}&status=${data.cardSort.status}&gender=${data.cardSort.gender}`
+        `https://rickandmortyapi.com/api/character/?page=${data.page}&name=${data.cardSort.value}&status=${data.cardSort.status}&gender=${data.cardSort.gender}`
       );
       if (!response.ok) {
         throw new Error(`Unable to load data, status ${response.status}`);
@@ -133,7 +121,7 @@ const RenderCarts: FC<Value> = ({ value }: Value) => {
         clearTimeout(time);
       };
     })();
-  }, [value, data.cardSort, data.page]);
+  }, [data.cardSort, data.page]);
 
   function clickPages(event: React.MouseEvent<HTMLElement>) {
     const eventElem = event.target as HTMLElement;
@@ -172,37 +160,6 @@ const RenderCarts: FC<Value> = ({ value }: Value) => {
           {cardData && <ModalcardRender carts={cardData} key={'1'} />}
         </div>
       )}
-      <div>
-        <form className="sort-card" onSubmit={handleSubmit(onSubmit)}>
-          <label htmlFor="status">
-            Status:
-            <select data-testid="status" {...register('status')}>
-              <option value=""></option>
-              <option value="alive">alive</option>
-              <option value="dead">dead</option>
-              <option value="unknown">unknown</option>
-            </select>
-          </label>
-          <label htmlFor="gender">
-            Gender:
-            <select data-testid="gender" {...register('gender')}>
-              <option value=""></option>
-              <option value="female">female</option>
-              <option value="male">male</option>
-              <option value="genderless">Genderless</option>
-              <option value="unknown">Unknown</option>
-            </select>
-          </label>
-          <div className="block-form_item">
-            <button className="btn-sort" type="submit" value="Submit" data-testid="submit-sort">
-              search
-            </button>
-            <button onClick={resetAll} className="btn-sort" type="reset" data-testid="reset-sort">
-              reset
-            </button>
-          </div>
-        </form>
-      </div>
       <div data-testid="main-page" className="carts-block" onClick={clickParent}>
         {data.loading && <h2>Loading...</h2>}
         {data.data.map((cart: Character, id: number) => {
