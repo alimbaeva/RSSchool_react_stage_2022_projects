@@ -1,62 +1,31 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import React, { FC, useEffect, useRef, useState, useReducer } from 'react';
+import React, { FC, useEffect, useRef, useState, useContext, useReducer } from 'react';
 import './search.css';
 import RenderCarts from 'components/carts/RenderCarts';
 import { useForm } from 'react-hook-form';
+import { UserContext } from '../../App';
 import { CardSort, ActionTypeForm, StateForm } from 'Types';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function init(state: any) {
-  return { ...state };
-}
-
-function reduser(state: StateForm, action: StateForm) {
-  switch (action.type) {
-    case ActionTypeForm.DATA:
-      return {
-        ...action,
-      };
-    default:
-      return state;
-  }
-}
-
 const Search: FC<{}> = () => {
+  const { dataSearch, set } = useContext(UserContext);
   const { register, handleSubmit } = useForm<CardSort>();
   const [key, setKey] = useState<number>(0);
   const inputEl = useRef<HTMLInputElement | null>(null);
-  const [data, dispatch] = useReducer(
-    reduser,
-    {
-      type: '',
-      page: 1,
-      name: 'sss',
-      gender: 'ssss',
-      status: '',
-    },
-    init
-  );
 
   inputEl.current?.focus();
 
   const onSubmit = (data: CardSort) => {
     console.log(data.name, data.gender, data.status);
-    dispatch({
-      type: 'DATA',
-      page: 1,
-      name: data.name,
-      status: data.status,
-      gender: data.gender,
-    });
+    set(['1', data.name, data.status, data.gender]);
   };
-  console.log('====', data);
+
   const resetAll = () => {
     console.log('resetAll');
   };
 
   useEffect(() => {
     setKey(Math.random());
-  }, [data]);
+  }, [dataSearch]);
 
   return (
     <>

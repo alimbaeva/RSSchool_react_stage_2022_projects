@@ -3,6 +3,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import Carts from './Carts';
 import ModalcardRender from './ModalcardRender';
 import { Character } from '../../rickiMartyTypes';
+import { UserContext } from '../../App';
 import { CardSort, StateForm } from 'Types';
 import './RenderCarts.css';
 
@@ -68,23 +69,25 @@ function reduser(state: State, action: State) {
 }
 
 const RenderCarts: FC = () => {
+  const { dataSearch } = useContext(UserContext);
   const [clickCartModal, setClickCartModal] = useState<boolean>(false);
   const [cardData, setСardData] = useState();
   const divPage = useRef<HTMLDivElement | null>(null);
+  console.log(dataSearch);
 
   const [data, dispatch] = useReducer(
     reduser,
     {
       data: [],
-      page: value.page,
+      page: Number(dataSearch[0]),
       allPages: null,
-      cardSort: { name: value.name, status: value.status, gender: value.gender },
+      cardSort: { name: dataSearch[1], status: dataSearch[2], gender: dataSearch[3] },
       type: '',
       loading: true,
     },
     init
   );
-
+  console.log(data);
   const changePageNext = () => {
     const pagenumber = Number(divPage.current?.innerHTML);
     if (pagenumber >= data.allPages) {
@@ -105,7 +108,7 @@ const RenderCarts: FC = () => {
   useEffect(() => {
     (async () => {
       const response = await fetch(
-        `https://rickandmortyapi.com/api/character/?page=${data.page}&name=${data.cardSort.value}&status=${data.cardSort.status}&gender=${data.cardSort.gender}`
+        `https://rickandmortyapi.com/api/character/?page=${data.page}&name=${data.cardSort.name}&status=${data.cardSort.status}&gender=${data.cardSort.gender}`
       );
       if (!response.ok) {
         throw new Error(`Unable to load data, status ${response.status}`);
