@@ -1,11 +1,6 @@
 import React from 'react';
-// import { CartsT } from 'Types';
-import { Character } from '../../rickiMartyTypes';
+import { Props } from '../../Types';
 import './carts.css';
-
-type Props = {
-  carts: Character;
-};
 
 export default class Carts extends React.Component<Props> {
   constructor(props: Props) {

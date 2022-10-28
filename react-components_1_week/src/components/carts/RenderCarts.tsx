@@ -1,33 +1,28 @@
 import React, { FC, useEffect, useRef, useState, useReducer, useContext } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
 import Carts from './Carts';
 import ModalcardRender from './ModalcardRender';
 import { Character } from '../../rickiMartyTypes';
 import { UserContext } from '../../App';
-import { CardSort, StateForm } from 'Types';
+import { ActionType, State } from '../../Types';
 import './RenderCarts.css';
 
-interface Value {
-  value: string;
-}
+// enum ActionType {
+//   DATA = 'DATA',
+//   PAGE = 'PAGE',
+//   ALLPAGE = 'ALLPAGE',
+//   CARDSORT = 'CARDSORT',
+//   RESET = 'RESET',
+//   LOADING = 'LOADING',
+// }
 
-enum ActionType {
-  DATA = 'DATA',
-  PAGE = 'PAGE',
-  ALLPAGE = 'ALLPAGE',
-  CARDSORT = 'CARDSORT',
-  RESET = 'RESET',
-  LOADING = 'LOADING',
-}
-
-interface State {
-  data?: [];
-  page?: number;
-  allPages?: number | null;
-  cardSort?: { status: string; gender: string };
-  type?: string;
-  loading?: boolean;
-}
+// interface State {
+//   data?: [];
+//   page?: number;
+//   allPages?: number | null;
+//   cardSort?: { status: string; gender: string };
+//   type?: string;
+//   loading?: boolean;
+// }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function init(state: any) {
@@ -73,7 +68,6 @@ const RenderCarts: FC = () => {
   const [clickCartModal, setClickCartModal] = useState<boolean>(false);
   const [cardData, setСardData] = useState();
   const divPage = useRef<HTMLDivElement | null>(null);
-  console.log(dataSearch);
 
   const [data, dispatch] = useReducer(
     reduser,
@@ -87,7 +81,7 @@ const RenderCarts: FC = () => {
     },
     init
   );
-  console.log(data);
+
   const changePageNext = () => {
     const pagenumber = Number(divPage.current?.innerHTML);
     if (pagenumber >= data.allPages) {

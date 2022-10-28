@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import React, { FC, useEffect, useRef, useState, useContext, useReducer } from 'react';
+import React, { FC, useEffect, useRef, useState, useContext } from 'react';
 import './search.css';
 import RenderCarts from 'components/carts/RenderCarts';
 import { useForm } from 'react-hook-form';
 import { UserContext } from '../../App';
-import { CardSort, ActionTypeForm, StateForm } from 'Types';
+import { CardSort } from 'Types';
 
 const Search: FC<{}> = () => {
   const { dataSearch, set } = useContext(UserContext);

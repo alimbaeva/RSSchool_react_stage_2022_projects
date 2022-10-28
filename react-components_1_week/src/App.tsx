@@ -1,18 +1,14 @@
-import React, { useContext, useState, createContext, useMemo } from 'react';
+import React, { useState, createContext } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Main from 'components/pages/Main';
 import Header from 'components/header/Header';
 import About from 'components/pages/About';
 import NoteFound from 'components/pages/NoteFound';
 import Forms from 'components/pages/Forms';
+import { Typecontext } from './Types';
 import './app.css';
 
-interface Typecontext {
-  dataSearch: string[];
-  set: (el: string[]) => void;
-}
-
-const initial = { dataSearch: ['1', '', '', ''], set: (el: string[]) => null };
+const initial = { dataSearch: ['1', '', '', ''], set: () => null };
 
 export const UserContext = createContext<Typecontext>(initial);
 
