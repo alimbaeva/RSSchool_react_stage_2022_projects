@@ -4,13 +4,23 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { IFormInput } from '../../Types';
 import './style/forms.css';
 
+interface FormsType {
+  firstName: string;
+  lname: string;
+  dateDelivery: string;
+  myfile: string;
+  email: string;
+  sex: string;
+  errors: string;
+}
+
 export const carts: IFormInput[] = localStorage.getItem('carts')
   ? JSON.parse(localStorage.getItem('carts')!)
   : [];
 
 const FormsData: FC = () => {
   const [key, setKey] = useState<number>(1);
-  // const [image, setImage] = useState(null);
+  const [formsData, setFormsData] = useState<FormsType[]>([]);
 
   const {
     register,
@@ -20,7 +30,6 @@ const FormsData: FC = () => {
 
   const onSubmit: SubmitHandler<IFormInput> = (data: IFormInput) => {
     const url = (data.myfile as unknown as FileList).item(0)?.name;
-    console.log(url);
     const dataCard = {
       firstName: data.firstName,
       lname: data.lname,
@@ -31,6 +40,7 @@ const FormsData: FC = () => {
       errors: data.errors,
     };
     carts.push(dataCard);
+    setFormsData([...formsData, dataCard]);
     localStorage.setItem('carts', JSON.stringify(carts));
     Array.from(document.querySelectorAll('input')).forEach((input) => (input.value = ''));
   };
@@ -38,6 +48,8 @@ const FormsData: FC = () => {
   useEffect(() => {
     setKey(Math.random());
   }, [register]);
+
+  console.log(formsData);
 
   return (
     <>
