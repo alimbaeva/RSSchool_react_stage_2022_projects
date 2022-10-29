@@ -13,6 +13,7 @@ export type formCard = {
   errors?: string;
 };
 export type search = {
+  page: number;
   name: string;
   status: string;
   gender: string;
@@ -33,6 +34,7 @@ export interface Action {
 
 export const initialStateSearch: StateType = {
   search: {
+    page: 1,
     name: '',
     status: '',
     gender: '',

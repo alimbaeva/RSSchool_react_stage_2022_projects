@@ -1,11 +1,12 @@
 import React, { FC } from 'react';
 import { IFormInput } from '../../Types';
+import { formCard } from '../reduser/reduserTypes';
 
-interface formCard {
-  card: IFormInput;
+interface formCardI {
+  card: formCard;
 }
 
-const CreatFormCart: FC<formCard> = (card: formCard) => {
+const CreatFormCart: FC<formCardI> = (card: formCardI) => {
   return (
     <div className="item" data-tesyid="form-vart-id">
       <h3>

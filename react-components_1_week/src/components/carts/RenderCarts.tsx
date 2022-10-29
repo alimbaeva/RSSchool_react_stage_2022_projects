@@ -2,7 +2,7 @@ import React, { FC, useEffect, useRef, useState, useReducer, useContext } from '
 import Carts from './Carts';
 import ModalcardRender from './ModalcardRender';
 import { Character } from '../../rickiMartyTypes';
-import { UserContext } from '../../App';
+import { UserContext } from '../context/UseContext';
 import { ActionType, State } from '../../Types';
 import './RenderCarts.css';
 
@@ -64,7 +64,7 @@ function reduser(state: State, action: State) {
 }
 
 const RenderCarts: FC = () => {
-  const { dataSearch } = useContext(UserContext);
+  const { state } = useContext(UserContext);
   const [clickCartModal, setClickCartModal] = useState<boolean>(false);
   const [cardData, setСardData] = useState();
   const divPage = useRef<HTMLDivElement | null>(null);
@@ -73,9 +73,13 @@ const RenderCarts: FC = () => {
     reduser,
     {
       data: [],
-      page: Number(dataSearch[0]),
+      page: Number(state.search?.page),
       allPages: null,
-      cardSort: { name: dataSearch[1], status: dataSearch[2], gender: dataSearch[3] },
+      cardSort: {
+        name: state.search?.name,
+        status: state.search?.status,
+        gender: state.search?.gender,
+      },
       type: '',
       loading: true,
     },

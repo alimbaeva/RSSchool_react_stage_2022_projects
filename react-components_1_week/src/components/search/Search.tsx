@@ -3,10 +3,11 @@ import React, { FC, useEffect, useRef, useState, useContext } from 'react';
 import './search.css';
 import RenderCarts from 'components/carts/RenderCarts';
 import { useForm } from 'react-hook-form';
-import { UserContext } from '../../App';
+// import { UserContext } from '../../App';
 import { CardSort } from 'Types';
 import { reducerSearch } from '../reduser/Reduser';
 import { initialStateSearch, StateType, Action, ActionType } from '../reduser/reduserTypes';
+import { UserContext } from '../context/UseContext';
 
 // const enum ActionType {
 //   ADDSEARCH = 'ADDSEARCH',
@@ -48,25 +49,27 @@ import { initialStateSearch, StateType, Action, ActionType } from '../reduser/re
 // };
 
 const Search: FC<{}> = () => {
-  const { dataSearch, set } = useContext(UserContext);
+  // const { dataSearch, set } = useContext(UserContext);
+  const { state, dispatch } = useContext(UserContext);
   const { register, handleSubmit } = useForm<CardSort>();
   const [key, setKey] = useState<number>(0);
   const inputEl = useRef<HTMLInputElement | null>(null);
 
-  const [state, dispatch] = React.useReducer<React.Reducer<StateType, Action>>(
-    reducerSearch,
-    initialStateSearch
-  );
+  // const [state, dispatch] = React.useReducer<React.Reducer<StateType, Action>>(
+  //   reducerSearch,
+  //   initialStateSearch
+  // );
 
   inputEl.current?.focus();
 
   const onSubmit = (data: CardSort) => {
     // console.log(data.name, data.gender, data.status);
-    set(['1', data.name, data.status, data.gender]);
+    // set(['1', data.name, data.status, data.gender]);
     dispatch({
       type: ActionType.ADDSEARCH,
       payload: {
         search: {
+          page: 1,
           name: data.name,
           status: data.status,
           gender: data.gender,
@@ -83,7 +86,7 @@ const Search: FC<{}> = () => {
 
   useEffect(() => {
     setKey(Math.random());
-  }, [dataSearch]);
+  }, [state]);
 
   return (
     <>
