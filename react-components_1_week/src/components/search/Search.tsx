@@ -5,6 +5,47 @@ import RenderCarts from 'components/carts/RenderCarts';
 import { useForm } from 'react-hook-form';
 import { UserContext } from '../../App';
 import { CardSort } from 'Types';
+import { reducerSearch } from '../reduser/Reduser';
+import { initialStateSearch, StateType, Action, ActionType } from '../reduser/reduserTypes';
+
+// const enum ActionType {
+//   ADDSEARCH = 'ADDSEARCH',
+// }
+
+// interface StateType {
+//   name: string;
+//   status: string;
+//   gender: string;
+// }
+
+// interface Action {
+//   type: ActionType;
+//   payload: {
+//     name: string;
+//     status: string;
+//     gender: string;
+//   };
+// }
+
+// const initialState: StateType = {
+//   name: '',
+//   status: '',
+//   gender: '',
+// };
+
+// const reducer: React.Reducer<StateType, Action> = (state, action) => {
+//   switch (action.type) {
+//     case ActionType.ADDSEARCH:
+//       return {
+//         ...state,
+//         name: action.payload.name,
+//         status: action.payload.status,
+//         gender: action.payload.gender,
+//       };
+//     default:
+//       throw new Error();
+//   }
+// };
 
 const Search: FC<{}> = () => {
   const { dataSearch, set } = useContext(UserContext);
@@ -12,16 +53,33 @@ const Search: FC<{}> = () => {
   const [key, setKey] = useState<number>(0);
   const inputEl = useRef<HTMLInputElement | null>(null);
 
+  const [state, dispatch] = React.useReducer<React.Reducer<StateType, Action>>(
+    reducerSearch,
+    initialStateSearch
+  );
+
   inputEl.current?.focus();
 
   const onSubmit = (data: CardSort) => {
-    console.log(data.name, data.gender, data.status);
+    // console.log(data.name, data.gender, data.status);
     set(['1', data.name, data.status, data.gender]);
+    dispatch({
+      type: ActionType.ADDSEARCH,
+      payload: {
+        search: {
+          name: data.name,
+          status: data.status,
+          gender: data.gender,
+        },
+      },
+    });
   };
 
   const resetAll = () => {
     console.log('resetAll');
   };
+
+  console.log('state-dispach', state);
 
   useEffect(() => {
     setKey(Math.random());
