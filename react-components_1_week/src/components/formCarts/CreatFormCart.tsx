@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import { IFormInput } from '../../Types';
 import { formCard } from '../reduser/reduserTypes';
 
 interface formCardI {

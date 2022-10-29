@@ -6,24 +6,6 @@ import { UserContext } from '../context/UseContext';
 import { ActionType, State } from '../../Types';
 import './RenderCarts.css';
 
-// enum ActionType {
-//   DATA = 'DATA',
-//   PAGE = 'PAGE',
-//   ALLPAGE = 'ALLPAGE',
-//   CARDSORT = 'CARDSORT',
-//   RESET = 'RESET',
-//   LOADING = 'LOADING',
-// }
-
-// interface State {
-//   data?: [];
-//   page?: number;
-//   allPages?: number | null;
-//   cardSort?: { status: string; gender: string };
-//   type?: string;
-//   loading?: boolean;
-// }
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function init(state: any) {
   return { ...state };
