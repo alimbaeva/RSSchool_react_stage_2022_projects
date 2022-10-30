@@ -112,24 +112,24 @@ const RenderCarts: FC = () => {
     dispatch({ type: 'PAGE', page: num });
   }
 
-  async function clickParent(event: React.MouseEvent<HTMLElement>) {
-    const eventElem = event.target as HTMLElement;
-    const cartID_1 = eventElem.parentNode?.parentElement?.parentElement?.getAttribute('id');
-    const cartID_2 = eventElem.parentNode?.parentElement?.getAttribute('id');
-    const clickCard = cartID_1 ? cartID_1 : cartID_2 ? cartID_2 : '';
-    if (clickCard) {
-      setClickCartModal(true);
-      document.querySelector('.modalCard')?.classList.remove('modalCardNon');
-      try {
-        const idCard = clickCard;
-        const response = await fetch(`https://rickandmortyapi.com/api/character/${idCard}`);
-        const cardData = await response.json();
-        setСardData(cardData);
-      } catch (err) {
-        console.log(err);
-      }
-    }
-  }
+  // async function clickParent(event: React.MouseEvent<HTMLElement>) {
+  //   const eventElem = event.target as HTMLElement;
+  //   const cartID_1 = eventElem.parentNode?.parentElement?.parentElement?.getAttribute('id');
+  //   const cartID_2 = eventElem.parentNode?.parentElement?.getAttribute('id');
+  //   const clickCard = cartID_1 ? cartID_1 : cartID_2 ? cartID_2 : '';
+  //   if (clickCard) {
+  //     setClickCartModal(true);
+  //     document.querySelector('.modalCard')?.classList.remove('modalCardNon');
+  //     try {
+  //       const idCard = clickCard;
+  //       const response = await fetch(`https://rickandmortyapi.com/api/character/${idCard}`);
+  //       const cardData = await response.json();
+  //       setСardData(cardData);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  // }
 
   const closeModal = () => {
     document.querySelector('.modalCard')?.classList.add('modalCardNon');
@@ -143,7 +143,8 @@ const RenderCarts: FC = () => {
           {cardData && <ModalcardRender carts={cardData} key={'1'} />}
         </div>
       )}
-      <div data-testid="main-page" className="carts-block" onClick={clickParent}>
+      {/* <div data-testid="main-page" className="carts-block" onClick={clickParent}> */}
+      <div data-testid="main-page" className="carts-block">
         {data.loading && <h2>Loading...</h2>}
         {data.data.map((cart: Character, id: number) => {
           return <Carts carts={cart} key={id} />;

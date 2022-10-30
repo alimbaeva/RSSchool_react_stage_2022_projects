@@ -9,6 +9,7 @@ import { UserContext } from './components/context/UseContext';
 import { reducerSearch } from './components/reduser/Reduser';
 import { StateType, Action, initialStateSearch } from './components/reduser/reduserTypes';
 import './app.css';
+import IdCard from 'components/pages/IdCard';
 
 function App() {
   const [state, dispatch] = React.useReducer<React.Reducer<StateType, Action>>(
@@ -24,6 +25,7 @@ function App() {
         </header>
         <Routes>
           <Route index element={<Main />} />
+          <Route path="/:id" element={<IdCard />} />
           <Route path="about" element={<About />} />
           <Route path="forms" element={<Forms />} />
           <Route path="*" element={<NoteFound />} />
