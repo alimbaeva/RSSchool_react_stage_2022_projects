@@ -1,0 +1,44 @@
+.forms {
+    display: flex;
+    flex-wrap: wrap;
+}
+h2 {
+    width: 100%;
+    text-align: center;
+}
+
+.forms input {
+    padding: 4px 12px;
+    display: block;
+    margin-top: 8px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.block-form_item {
+    display: flex;
+}
+
+.block-form_item button {
+    margin-right: 22px;
+}
+.block-form_item .btn-form {
+    background-color: inherit;
+    padding: 6px 12px;
+    border-radius: 5px;
+}
+
+.block-form_item .btn-form:hover {
+    background-color: rgb(157, 228, 157);
+}
+
+.form-cart-block {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.error-form {
+    margin: 10px 0;
+    color: red;
+}
