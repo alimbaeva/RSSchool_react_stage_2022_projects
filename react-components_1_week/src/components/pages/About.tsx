@@ -3,6 +3,7 @@ import './style/about.css';
 
 export default class About extends React.Component {
   render(): React.ReactNode {
+    document.title = `React Component RS/About`;
     return (
       <div className="container">
         <div data-testid="about-page" className="about">

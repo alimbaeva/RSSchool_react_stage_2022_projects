@@ -1,6 +1,6 @@
 import Episods from 'components/carts/Episods';
 import React, { FC, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Character } from 'rickiMartyTypes';
 import './style/IdCard.css';
 
@@ -32,7 +32,7 @@ const IdCard: FC = () => {
 
       const data = await res.clone().json();
       setCart(data);
-      console.log(data);
+      document.title = `${data.name}/${id}`;
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
@@ -63,6 +63,9 @@ const IdCard: FC = () => {
   if (cart) {
     return (
       <div className="container">
+        <Link className="back" to={'/'}>
+          Back
+        </Link>
         <div className="cartid-block">
           <div className="cartid">
             <img src={cart.image} alt={cart.name} />

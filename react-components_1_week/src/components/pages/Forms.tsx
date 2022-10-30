@@ -6,6 +6,7 @@ import FormsData from './FormsData';
 import './style/forms.css';
 
 const Forms: FC = () => {
+  document.title = `React Component RS/Form`;
   const [state, dispatch] = React.useReducer<React.Reducer<StateType, Action>>(
     reducerSearch,
     initialStateSearch

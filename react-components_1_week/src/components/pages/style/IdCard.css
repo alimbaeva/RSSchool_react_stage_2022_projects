@@ -42,3 +42,14 @@
     flex-wrap: wrap;
     justify-content: space-between;
 }
+
+.back {
+    display: block;
+    cursor: pointer;
+    padding: 10px 0 10px 10px;
+    margin-bottom: 60px;
+    background-color: rgb(161, 122, 122);
+    color: rgb(13, 13, 13);
+    font-weight: 900;
+    text-decoration: none;
+}
