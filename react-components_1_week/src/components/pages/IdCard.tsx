@@ -1,6 +1,6 @@
 import Episods from 'components/carts/Episods';
 import React, { FC, useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Character } from 'rickiMartyTypes';
 import './style/IdCard.css';
 
@@ -20,7 +20,9 @@ export type CartType = {
 };
 
 const IdCard: FC = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
+  const { pathname } = useLocation();
   const [cart, setCart] = useState<Character | null>(null);
   const [episods, setEpisods] = useState<CartType[]>([]);
   useEffect(() => {
@@ -28,6 +30,9 @@ const IdCard: FC = () => {
       const res = await fetch(`https://rickandmortyapi.com/api/character/${id}`);
       if (!res.ok) {
         console.log('данных нету');
+        (function () {
+          navigate('/');
+        })();
       }
 
       const data = await res.clone().json();
@@ -66,6 +71,7 @@ const IdCard: FC = () => {
         <Link className="back" to={'/'}>
           Back
         </Link>
+        <h2 className="pathname">Path: {pathname}</h2>
         <div className="cartid-block">
           <div className="cartid">
             <img src={cart.image} alt={cart.name} />

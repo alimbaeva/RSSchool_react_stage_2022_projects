@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useReducer, useContext } from 'react';
+import React, { FC, useEffect, useRef, useReducer, useContext, useState } from 'react';
 import Carts from './Carts';
 import { Character } from '../../rickiMartyTypes';
 import { UserContext } from '../context/UseContext';
@@ -47,6 +47,7 @@ function reduser(state: State, action: State) {
 const RenderCarts: FC = () => {
   const { state } = useContext(UserContext);
   const divPage = useRef<HTMLDivElement | null>(null);
+  const [errSearch, setErrSearch] = useState<boolean>(false);
 
   const [data, dispatch] = useReducer(
     reduser,
@@ -84,10 +85,12 @@ const RenderCarts: FC = () => {
 
   useEffect(() => {
     (async () => {
+      setErrSearch(false);
       const response = await fetch(
         `https://rickandmortyapi.com/api/character/?page=${data.page}&name=${data.cardSort.name}&status=${data.cardSort.status}&gender=${data.cardSort.gender}`
       );
       if (!response.ok) {
+        setErrSearch(true);
         throw new Error(`Unable to load data, status ${response.status}`);
       }
       const datas = await response.json();
@@ -113,6 +116,7 @@ const RenderCarts: FC = () => {
     <div className="container">
       <div data-testid="main-page" className="carts-block">
         {data.loading && <h2>Loading...</h2>}
+        {errSearch && <h2>According to your request, nothing was found!!!</h2>}
         {data.data.map((cart: Character, id: number) => {
           return <Carts carts={cart} key={id} />;
         })}
