@@ -1,6 +1,5 @@
-import React, { FC, useEffect, useRef, useState, useReducer, useContext } from 'react';
+import React, { FC, useEffect, useRef, useReducer, useContext } from 'react';
 import Carts from './Carts';
-import ModalcardRender from './ModalcardRender';
 import { Character } from '../../rickiMartyTypes';
 import { UserContext } from '../context/UseContext';
 import { ActionType, State } from '../../Types';
@@ -47,8 +46,6 @@ function reduser(state: State, action: State) {
 
 const RenderCarts: FC = () => {
   const { state } = useContext(UserContext);
-  const [clickCartModal, setClickCartModal] = useState<boolean>(false);
-  const [cardData, setСardData] = useState();
   const divPage = useRef<HTMLDivElement | null>(null);
 
   const [data, dispatch] = useReducer(
@@ -112,38 +109,8 @@ const RenderCarts: FC = () => {
     dispatch({ type: 'PAGE', page: num });
   }
 
-  // async function clickParent(event: React.MouseEvent<HTMLElement>) {
-  //   const eventElem = event.target as HTMLElement;
-  //   const cartID_1 = eventElem.parentNode?.parentElement?.parentElement?.getAttribute('id');
-  //   const cartID_2 = eventElem.parentNode?.parentElement?.getAttribute('id');
-  //   const clickCard = cartID_1 ? cartID_1 : cartID_2 ? cartID_2 : '';
-  //   if (clickCard) {
-  //     setClickCartModal(true);
-  //     document.querySelector('.modalCard')?.classList.remove('modalCardNon');
-  //     try {
-  //       const idCard = clickCard;
-  //       const response = await fetch(`https://rickandmortyapi.com/api/character/${idCard}`);
-  //       const cardData = await response.json();
-  //       setСardData(cardData);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   }
-  // }
-
-  const closeModal = () => {
-    document.querySelector('.modalCard')?.classList.add('modalCardNon');
-    setClickCartModal(false);
-  };
-
   return (
     <div className="container">
-      {clickCartModal && (
-        <div data-testid="model-page" className="modalCard" onClick={closeModal}>
-          {cardData && <ModalcardRender carts={cardData} key={'1'} />}
-        </div>
-      )}
-      {/* <div data-testid="main-page" className="carts-block" onClick={clickParent}> */}
       <div data-testid="main-page" className="carts-block">
         {data.loading && <h2>Loading...</h2>}
         {data.data.map((cart: Character, id: number) => {

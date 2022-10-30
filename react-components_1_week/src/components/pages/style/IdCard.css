@@ -1,0 +1,44 @@
+.cartid-block {
+    width: 500px;
+    margin: 30px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+} 
+
+.cartid {
+    padding-bottom: 10px;
+    border-bottom: 5px solid black;
+}
+
+.cartid img {
+    display: block;
+    margin: 0 auto;
+}
+
+.cartid__text {
+    text-align: center;
+}
+
+.cartid__text h3 {
+    font-size: 34px;
+}
+.cartid__text p {
+    color: rgb(114, 5, 5);
+}
+.cartid__data {
+    font-size: 22px;
+}
+
+.ep-title {
+    text-align: center;
+    background-color: rgb(226, 178, 178);
+    padding: 5px 0;
+    margin-bottom: 30px;
+    font-size: 36px;
+}
+.episods {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
