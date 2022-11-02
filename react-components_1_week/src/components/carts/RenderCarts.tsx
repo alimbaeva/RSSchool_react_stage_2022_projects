@@ -3,7 +3,19 @@ import Carts from './Carts';
 import { Character } from '../../rickiMartyTypes';
 import { UserContext } from '../context/UseContext';
 import { ActionType, State } from '../../Types';
+// import { useSelector } from 'react-redux';
+import { searchState, useAppSelector } from 'components/redux/slice';
 import './RenderCarts.css';
+
+export type Search = {
+  page: number;
+  name: string;
+  status: string;
+  gender: string;
+};
+export interface SearchType {
+  search?: Search;
+}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function init(state: any) {
@@ -45,7 +57,8 @@ function reduser(state: State, action: State) {
 }
 
 const RenderCarts: FC = () => {
-  const { state } = useContext(UserContext);
+  // const { state } = useContext(UserContext);
+  const searchStateData = useAppSelector(searchState);
   const divPage = useRef<HTMLDivElement | null>(null);
   const [errSearch, setErrSearch] = useState<boolean>(false);
 
@@ -53,12 +66,12 @@ const RenderCarts: FC = () => {
     reduser,
     {
       data: [],
-      page: Number(state.search?.page),
+      page: Number(searchStateData.search?.page),
       allPages: null,
       cardSort: {
-        name: state.search?.name,
-        status: state.search?.status,
-        gender: state.search?.gender,
+        name: searchStateData.search?.name,
+        status: searchStateData.search?.status,
+        gender: searchStateData.search?.gender,
       },
       type: '',
       loading: true,
@@ -83,6 +96,9 @@ const RenderCarts: FC = () => {
     }
   };
 
+  console.log('searchStateData==', searchStateData.search?.gender);
+  console.log('data cards==', data);
+
   useEffect(() => {
     (async () => {
       setErrSearch(false);
@@ -104,7 +120,8 @@ const RenderCarts: FC = () => {
         clearTimeout(time);
       };
     })();
-  }, [data.cardSort, data.page]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [divPage, data.page]);
 
   function clickPages(event: React.MouseEvent<HTMLElement>) {
     const eventElem = event.target as HTMLElement;

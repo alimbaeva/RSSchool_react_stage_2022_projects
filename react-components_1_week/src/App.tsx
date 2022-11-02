@@ -18,21 +18,35 @@ function App() {
   );
 
   return (
-    <UserContext.Provider value={{ state, dispatch }}>
-      <div className="app">
-        <header>
-          <Header />
-        </header>
-        <Routes>
-          <Route index element={<Main />} />
-          <Route path="/:id" element={<IdCard />} />
-          <Route path="about" element={<About />} />
-          <Route path="forms" element={<Forms />} />
-          <Route path="*" element={<NoteFound />} />
-        </Routes>
-      </div>
-    </UserContext.Provider>
+    <div className="app">
+      <header>
+        <Header />
+      </header>
+      <Routes>
+        <Route index element={<Main />} />
+        <Route path="/:id" element={<IdCard />} />
+        <Route path="about" element={<About />} />
+        <Route path="forms" element={<Forms />} />
+        <Route path="*" element={<NoteFound />} />
+      </Routes>
+    </div>
   );
+  // return (
+  //   <UserContext.Provider value={{ state, dispatch }}>
+  //     <div className="app">
+  //       <header>
+  //         <Header />
+  //       </header>
+  //       <Routes>
+  //         <Route index element={<Main />} />
+  //         <Route path="/:id" element={<IdCard />} />
+  //         <Route path="about" element={<About />} />
+  //         <Route path="forms" element={<Forms />} />
+  //         <Route path="*" element={<NoteFound />} />
+  //       </Routes>
+  //     </div>
+  //   </UserContext.Provider>
+  // );
 }
 
 export default App;

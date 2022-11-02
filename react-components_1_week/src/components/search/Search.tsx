@@ -5,10 +5,13 @@ import { useForm } from 'react-hook-form';
 import { CardSort } from 'Types';
 import { ActionType } from '../reduser/reduserTypes';
 import { UserContext } from '../context/UseContext';
+import { useDispatch } from 'react-redux';
+import { actionsSearchData } from '../redux/slice';
 import './search.css';
 
 const Search: FC<{}> = () => {
-  const { state, dispatch } = useContext(UserContext);
+  // const { state, dispatch } = useContext(UserContext);
+  const dispatch = useDispatch();
   const { register, handleSubmit } = useForm<CardSort>();
   const [key, setKey] = useState<number>(0);
   const inputEl = useRef<HTMLInputElement | null>(null);
@@ -16,22 +19,22 @@ const Search: FC<{}> = () => {
   inputEl.current?.focus();
 
   const onSubmit = (data: CardSort) => {
-    dispatch({
-      type: ActionType.ADDSEARCH,
-      payload: {
-        search: {
-          page: 1,
-          name: data.name,
-          status: data.status,
-          gender: data.gender,
-        },
+    setKey(Math.random());
+    const itemSearch = {
+      search: {
+        page: 1,
+        name: data.name,
+        status: data.status,
+        gender: data.gender,
       },
-    });
+    };
+    dispatch(actionsSearchData.searchData(itemSearch));
   };
 
-  useEffect(() => {
-    setKey(Math.random());
-  }, [state]);
+  // useEffect(() => {
+  //   setKey(Math.random());
+  // }, [dispatch]);
+  // }, [state]);
 
   return (
     <>
