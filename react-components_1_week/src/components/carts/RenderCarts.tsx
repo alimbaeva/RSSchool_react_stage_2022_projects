@@ -1,9 +1,7 @@
-import React, { FC, useEffect, useRef, useReducer, useContext, useState } from 'react';
+import React, { FC, useEffect, useRef, useReducer, useState } from 'react';
 import Carts from './Carts';
 import { Character } from '../../rickiMartyTypes';
-import { UserContext } from '../context/UseContext';
 import { ActionType, State } from '../../Types';
-// import { useSelector } from 'react-redux';
 import { searchState, useAppSelector } from 'components/redux/slice';
 import './RenderCarts.css';
 

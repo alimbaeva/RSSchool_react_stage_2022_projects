@@ -1,15 +1,14 @@
-import { UserContext } from 'components/context/UseContext';
 import FormCarts from 'components/formCarts/FormCarts';
-import React, { FC, useContext, useEffect, useState } from 'react';
+import { actionsCerdForm } from 'components/redux/slice';
+import React, { FC, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 import { IFormInput } from '../../Types';
-import { ActionType, formCard } from '../reduser/reduserTypes';
 import './style/forms.css';
 
 const FormsData: FC = () => {
-  const { state, dispatch } = useContext(UserContext);
+  const dispatch = useDispatch();
   const [key, setKey] = useState<number>(1);
-  const [formsData, setFormsData] = useState<formCard[]>([]);
 
   const {
     register,
@@ -29,21 +28,9 @@ const FormsData: FC = () => {
       errors: data.errors,
     };
 
-    setFormsData([...formsData, dataCard]);
-    // Array.from(document.querySelectorAll('input')).forEach((input) => (input.value = ''));
-  };
-
-  useEffect(() => {
+    dispatch(actionsCerdForm.createDataCard(dataCard));
     setKey(Math.random());
-    dispatch({
-      type: ActionType.ADDFORMS,
-      payload: {
-        formCard: [...formsData],
-      },
-    });
-  }, [register, formsData, dispatch]);
-
-  console.log('state-dispach-form', state);
+  };
 
   return (
     <>

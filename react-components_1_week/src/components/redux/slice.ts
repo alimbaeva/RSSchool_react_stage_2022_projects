@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useSelector } from 'react-redux';
 import type { RootState } from './index';
 
@@ -21,6 +21,23 @@ export const initialSearch: SearchType = {
   },
 };
 
+export type formCard = {
+  firstName: string;
+  lname: string;
+  dateDelivery: string;
+  myfile: string;
+  email: string;
+  sex: string;
+  errors?: string;
+};
+export interface CreateCardType {
+  cardForm: formCard[];
+}
+
+export const initialCreateCard: CreateCardType = {
+  cardForm: [],
+};
+
 const searchDatasInput = createSlice({
   name: 'search',
   initialState: initialSearch,
@@ -34,9 +51,22 @@ const searchDatasInput = createSlice({
   },
 });
 
+const createCerdForm = createSlice({
+  name: 'creadCard',
+  initialState: initialCreateCard,
+  reducers: {
+    createDataCard(state, actions) {
+      state.cardForm = [actions.payload, ...state.cardForm];
+    },
+  },
+});
+
 const { actions: actionsSearchData, reducer: reducerSearchData } = searchDatasInput;
-// console.log('reducerSearchData', reducerSearchData);
+const { actions: actionsCerdForm, reducer: reducerCerdForm } = createCerdForm;
+
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 export const searchState = (state: RootState) => state.search;
+export const useAppSelectorForm: TypedUseSelectorHook<RootState> = useSelector;
+export const createState = (state: RootState) => state.creadCard;
 
-export { actionsSearchData, reducerSearchData };
+export { actionsSearchData, reducerSearchData, actionsCerdForm, reducerCerdForm };

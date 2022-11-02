@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { reducerSearchData } from './slice';
+import { reducerSearchData, reducerCerdForm } from './slice';
 
 const store = configureStore({
   reducer: {
     search: reducerSearchData,
+    creadCard: reducerCerdForm,
   },
 });
 

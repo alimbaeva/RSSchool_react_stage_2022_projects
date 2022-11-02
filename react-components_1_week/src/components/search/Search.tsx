@@ -1,16 +1,13 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import React, { FC, useEffect, useRef, useState, useContext } from 'react';
+import React, { FC, useRef, useState } from 'react';
 import RenderCarts from 'components/carts/RenderCarts';
 import { useForm } from 'react-hook-form';
 import { CardSort } from 'Types';
-import { ActionType } from '../reduser/reduserTypes';
-import { UserContext } from '../context/UseContext';
 import { useDispatch } from 'react-redux';
 import { actionsSearchData } from '../redux/slice';
 import './search.css';
 
 const Search: FC<{}> = () => {
-  // const { state, dispatch } = useContext(UserContext);
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm<CardSort>();
   const [key, setKey] = useState<number>(0);
@@ -30,11 +27,6 @@ const Search: FC<{}> = () => {
     };
     dispatch(actionsSearchData.searchData(itemSearch));
   };
-
-  // useEffect(() => {
-  //   setKey(Math.random());
-  // }, [dispatch]);
-  // }, [state]);
 
   return (
     <>
