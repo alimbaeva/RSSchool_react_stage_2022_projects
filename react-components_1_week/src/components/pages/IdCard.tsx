@@ -90,9 +90,11 @@ const IdCard: FC = () => {
         </div>
         <h3 className="ep-title">Episods</h3>
         <div className="episods">
-          {episods.map((el: CartType, id: number) => {
-            return <Episods carts={el} key={id} />;
-          })}
+          {episods.length >= 1
+            ? episods.map((el: CartType, id: number) => {
+                return <Episods carts={el} key={id} />;
+              })
+            : `No episodes`}
         </div>
       </div>
     );
