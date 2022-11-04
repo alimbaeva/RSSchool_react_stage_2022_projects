@@ -1,0 +1,13 @@
+.about {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.about h1 {
+    display: inline-block;
+    margin: 10px auto;
+}
+.about p {
+    text-align: center;
+}
